@@ -1,0 +1,74 @@
+import streamlit as st
+import random
+
+# Configuração da página para parecer um App de celular
+st.set_page_config(page_title="Simulado NR - Prof. Marcos", layout="centered")
+
+def carregar_questoes():
+    return [
+        {
+            "p": "Qual a principal função do Dispositivo Supervisor de Isolamento (DSI) no sistema IT?",
+            "o": ["Desligar a energia", "Monitorar o isolamento e avisar a 1ª falha", "Aumentar a carga", "Substituir o aterramento"],
+            "r": 1,
+            "e": "O DSI monitora a qualidade do isolamento em tempo real no sistema IT, essencial em centros cirúrgicos."
+        },
+        {
+            "p": "O que caracteriza a Classe C de incêndio?",
+            "o": ["Papel e Madeira", "Líquidos Inflamáveis", "Equipamentos Elétricos Energizados", "Metais Pirofóricos"],
+            "r": 2,
+            "e": "Classe C refere-se a materiais elétricos. Nunca use água, pois ela conduz eletricidade!"
+        },
+        # Adicione aqui as outras 98 questões seguindo o mesmo padrão...
+    ]
+
+# Inicialização das variáveis de estado
+if 'indice' not in st.session_state:
+    st.session_state.questoes = carregar_questoes()
+    random.shuffle(st.session_state.questoes)
+    st.session_state.indice = 0
+    st.session_state.acertos = 0
+    st.session_state.respondido = False
+
+st.title("🛡️ Simulado NR & Segurança")
+st.subheader(f"Questão {st.session_state.indice + 1} de {len(st.session_state.questoes)}")
+
+if st.session_state.indice < len(st.session_state.questoes):
+    q = st.session_state.questoes[st.session_state.indice]
+    
+    # Exibe a pergunta
+    st.write(f"### {q['p']}")
+
+    # Cria os botões de opção
+    for i, opcao in enumerate(q['o']):
+        if st.button(opcao, key=f"btn_{st.session_state.indice}_{i}", use_container_width=True):
+            st.session_state.respondido = True
+            st.session_state.ultima_escolha = i
+
+    # Se respondeu, mostra o feedback e o botão de próxima
+    if st.session_state.respondido:
+        escolha = st.session_state.ultima_escolha
+        if escolha == q['r']:
+            st.success("✅ **Correto!**")
+            if 'pode_contar' not in st.session_state or st.session_state.pode_contar == st.session_state.indice:
+                st.session_state.acertos += 1
+                st.session_state.pode_contar = st.session_state.indice + 1
+        else:
+            st.error(f"❌ **Errado.** A resposta correta era: {q['o'][q['r']]}")
+        
+        st.info(f"💡 **Explicação:** {q['e']}")
+
+        if st.button("Próxima Questão ➡️", use_container_width=True):
+            st.session_state.indice += 1
+            st.session_state.respondido = False
+            st.rerun()
+
+    st.divider()
+    st.write(f"Placar: **{st.session_state.acertos}** acertos")
+
+else:
+    st.balloons()
+    st.success(f"### Simulado Finalizado! \n Resultado: {st.session_state.acertos}/{len(st.session_state.questoes)}")
+    if st.button("Reiniciar Simulado"):
+        st.session_state.indice = 0
+        st.session_state.acertos = 0
+        st.rerun()
