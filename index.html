@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz NR - Prof. Marcos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center; }
+        .quiz-container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 5px; background: #007bff; color: white; font-size: 16px; cursor: pointer; }
+        .btn:hover { background: #0056b3; }
+        .explanation { background: #e9ecef; padding: 15px; border-radius: 5px; margin-top: 15px; display: none; text-align: left; }
+        .correct { background: #28a745 !important; }
+        .wrong { background: #dc3545 !important; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2 id="question">Carregando...</h2>
+    <div id="options"></div>
+    <div id="explanation" class="explanation"></div>
+    <button id="next-btn" class="btn" style="display:none; background: #28a745;">Próxima Questão</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            p: "No sistema de aterramento IT, o que acontece na ocorrência da primeira falha?",
+            o: ["Desligar a energia", "Monitorar o isolamento e avisar a 1ª falha", "Aumentar a carga", "Substituir o aterramento"],
+            r: 1,
+            e: "O sistema IT é projetado para manter a continuidade. O DSI avisa a falha sem desligar o sistema."
+        },
+        {
+            p: "O que caracteriza a Classe C de incêndio?",
+            o: ["Sólidos", "Líquidos", "Equipamentos Elétricos Energizados", "Metais"],
+            r: 2,
+            e: "Classe C envolve risco elétrico. O agente extintor não deve ser condutor (como CO2)."
+        }
+        // Adicione as outras questões aqui
+    ];
+
+    let currentQ = 0;
+
+    function loadQuestion() {
+        const q = questions[currentQ];
+        document.getElementById('question').innerText = q.p;
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        document.getElementById('explanation').style.display = 'none';
+        document.getElementById('next-btn').style.display = 'none';
+
+        q.o.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.className = 'btn';
+            btn.onclick = () => checkAnswer(i);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(i) {
+        const q = questions[currentQ];
+        const btns = document.querySelectorAll('#options .btn');
+        const expDiv = document.getElementById('explanation');
+        
+        btns.forEach(b => b.disabled = true);
+        
+        if(i === q.r) {
+            btns[i].classList.add('correct');
+        } else {
+            btns[i].classList.add('wrong');
+            btns[q.r].classList.add('correct');
+        }
+
+        expDiv.innerHTML = `<strong>Resposta:</strong> ${q.o[q.r]}<br><br><strong>Por quê?</strong> ${q.e}`;
+        expDiv.style.display = 'block';
+        document.getElementById('next-btn').style.display = 'block';
+    }
+
+    document.getElementById('next-btn').onclick = () => {
+        currentQ++;
+        if(currentQ < questions.length) loadQuestion();
+        else alert("Quiz finalizado!");
+    };
+
+    loadQuestion();
+</script>
+</body>
+</html>
