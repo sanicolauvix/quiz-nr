@@ -111,4 +111,17 @@
             document.getElementById('score').innerText = `Acertos: ${score}`;
         } else {
             fb.className = 'feedback wrong';
-            fb.innerHTML =
+            fb.innerHTML = `<b>❌ ERROU!</b> A correta era: <b>${q.o[q.r]}</b><br>${q.e}`;
+        }
+        document.getElementById('next-btn').style.display = 'block';
+    }
+
+    document.getElementById('next-btn').onclick = () => {
+        current++;
+        load();
+    };
+
+    load();
+</script>
+</body>
+</html>
