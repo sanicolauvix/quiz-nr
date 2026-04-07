@@ -3,125 +3,403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado 100 Questões - Segurança e NRs</title>
+    <title>Segurança do Trabalho - SENAI Cariacica</title>
     <style>
-        :root { --primary: #007bff; --success: #28a745; --danger: #dc3545; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .quiz-container { background: white; width: 100%; max-width: 600px; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        h2 { font-size: 1.1rem; color: #333; line-height: 1.4; margin-bottom: 20px; }
-        .btn { display: block; width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; background: white; cursor: pointer; text-align: left; transition: 0.2s; font-size: 1rem; }
-        .btn:hover:not(:disabled) { background: #f0f7ff; border-color: var(--primary); }
-        .btn:disabled { cursor: not-allowed; }
-        .feedback { padding: 15px; border-radius: 8px; margin-top: 15px; display: none; font-size: 0.95rem; line-height: 1.5; }
-        .correct { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .wrong { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .next-btn { background: var(--primary); color: white; border: none; font-weight: bold; text-align: center; margin-top: 15px; display: none; }
-        .score-box { font-weight: bold; color: var(--primary); }
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1040a0;
+            --success: #057a55;
+            --danger: #e02424;
+            --warn: #c27803;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #111827;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --radius: 14px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* ===== MENU ===== */
+        #page-menu { display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        .menu-header { text-align: center; margin-bottom: 40px; }
+        .menu-header h1 { font-size: 1.8rem; color: var(--primary); margin-bottom: 8px; }
+        .menu-header p { color: var(--muted); font-size: 1rem; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; width: 100%; max-width: 900px; }
+        .menu-card { background: var(--card); border-radius: var(--radius); padding: 32px 24px; text-align: center; cursor: pointer; border: 2px solid var(--border); transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .menu-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,86,219,0.15); }
+        .menu-card .icon { font-size: 3rem; margin-bottom: 16px; }
+        .menu-card h2 { font-size: 1.1rem; color: var(--text); margin-bottom: 8px; }
+        .menu-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+
+        /* ===== PAGES ===== */
+        .page { display: none; padding: 24px 20px; max-width: 900px; margin: 0 auto; }
+        .page.active { display: block; }
+        .page-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .back-btn { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: 0.9rem; color: var(--muted); transition: 0.2s; }
+        .back-btn:hover { background: var(--border); color: var(--text); }
+        .page-title { font-size: 1.4rem; color: var(--primary); }
+
+        /* ===== VIDEO ===== */
+        .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; border-radius: var(--radius); overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.12); background: #000; }
+        .video-wrap iframe, .video-wrap video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .video-desc { background: var(--card); border-radius: var(--radius); padding: 20px; margin-top: 20px; border: 1px solid var(--border); }
+        .video-desc h3 { color: var(--primary); margin-bottom: 10px; }
+        .video-desc ul { padding-left: 20px; }
+        .video-desc li { margin-bottom: 6px; line-height: 1.5; color: var(--muted); font-size: 0.95rem; }
+
+        /* ===== QUIZ ===== */
+        .quiz-wrap { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .quiz-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
+        .quiz-progress { font-size: 0.9rem; color: var(--muted); }
+        .quiz-score { font-weight: 700; color: var(--primary); font-size: 1rem; }
+        .progress-bar-bg { background: var(--border); border-radius: 99px; height: 6px; margin-bottom: 20px; }
+        .progress-bar-fill { background: var(--primary); border-radius: 99px; height: 6px; transition: width 0.4s; }
+        .quiz-question { font-size: 1.05rem; font-weight: 600; line-height: 1.6; margin-bottom: 20px; color: var(--text); }
+        .quiz-opt { display: block; width: 100%; padding: 14px 18px; margin-bottom: 10px; border: 2px solid var(--border); border-radius: 10px; background: var(--card); cursor: pointer; text-align: left; font-size: 0.97rem; transition: 0.15s; color: var(--text); }
+        .quiz-opt:hover:not(:disabled) { background: #eff6ff; border-color: var(--primary); }
+        .quiz-opt:disabled { cursor: not-allowed; }
+        .quiz-opt.correct { background: #d1fae5; border-color: var(--success); color: var(--success); }
+        .quiz-opt.wrong { background: #fee2e2; border-color: var(--danger); color: var(--danger); }
+        .quiz-feedback { padding: 14px 18px; border-radius: 10px; margin-top: 10px; display: none; font-size: 0.93rem; line-height: 1.5; }
+        .quiz-feedback.ok { background: #d1fae5; color: #064e3b; border: 1px solid #6ee7b7; }
+        .quiz-feedback.err { background: #fee2e2; color: #7f1d1d; border: 1px solid #fca5a5; }
+        .quiz-next { background: var(--primary); color: white; border: none; border-radius: 10px; padding: 14px 28px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; margin-top: 14px; display: none; transition: 0.2s; }
+        .quiz-next:hover { background: var(--primary-dark); }
+        .quiz-end { text-align: center; padding: 20px; }
+        .quiz-end h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 12px; }
+        .quiz-end .final-score { font-size: 2.5rem; font-weight: 900; color: var(--primary); margin: 16px 0; }
+        .quiz-end p { color: var(--muted); margin-bottom: 20px; }
+        .quiz-restart { background: var(--primary); color: white; border: none; border-radius: 10px; padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .quiz-restart:hover { background: var(--primary-dark); }
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
-    <div class="header">
-        <span id="progress">Questão 1/100</span>
-        <span class="score-box" id="score">Acertos: 0</span>
+<!-- ==================== MENU ==================== -->
+<div id="page-menu">
+    <div class="menu-header">
+        <h1>Segurança do Trabalho</h1>
+        <p>SENAI Unidade Cariacica &nbsp;·&nbsp; Prof. Marcos José dos Santos</p>
     </div>
-    
-    <div id="quiz-content">
-        <h2 id="question">Carregando pergunta...</h2>
-        <div id="options"></div>
-        <div id="feedback" class="feedback"></div>
-        <button id="next-btn" class="btn next-btn">PRÓXIMA QUESTÃO ➡️</button>
+    <div class="menu-grid">
+        <div class="menu-card" onclick="show('page-nr')">
+            <div class="icon">📋</div>
+            <h2>Normas Regulamentadoras</h2>
+            <p>NR-01, NR-05, NR-06, NR-10, NR-15, NR-16, NR-17 e mais</p>
+        </div>
+        <div class="menu-card" onclick="show('page-aterramento')">
+            <div class="icon">⚡</div>
+            <h2>Aterramento Elétrico</h2>
+            <p>Sistemas TN, TT e IT · NBR 5410 · Componentes e instalação</p>
+        </div>
+        <div class="menu-card" onclick="show('page-socorros')">
+            <div class="icon">🚑</div>
+            <h2>Primeiros Socorros</h2>
+            <p>Protocolo ABC · Queimaduras · Engasgo · Hemorragias</p>
+        </div>
+        <div class="menu-card" onclick="show('page-quiz')">
+            <div class="icon">🏆</div>
+            <h2>Simulado (100 questões)</h2>
+            <p>Baseado nas aulas de NRs, aterramento e primeiros socorros</p>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== NR ==================== -->
+<div id="page-nr" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="show('page-menu')">← Voltar</button>
+        <span class="page-title">Normas Regulamentadoras</span>
+    </div>
+    <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/exef0f-nFVI" allowfullscreen></iframe>
+    </div>
+    <div class="video-desc">
+        <h3>O que você vai aprender:</h3>
+        <ul>
+            <li><strong>NR-01</strong> – Norma Mãe: GRO, PGR, Inventário de Riscos, Plano de Ação e Direito de Recusa</li>
+            <li><strong>NR-05</strong> – CIPA: missão, composição paritária e mandato</li>
+            <li><strong>NR-06</strong> – EPI: obrigações do empregador e do empregado</li>
+            <li><strong>NR-10</strong> – Segurança elétrica: qualificado, habilitado e capacitado</li>
+            <li><strong>NR-15 / NR-16</strong> – Insalubridade (dano progressivo) x Periculosidade (risco imediato)</li>
+            <li><strong>NR-17</strong> – Ergonomia: adaptação do trabalho ao trabalhador</li>
+        </ul>
+    </div>
+    <div class="video-desc" style="margin-top:16px">
+        <h3>Aula completa em vídeo:</h3>
+        <video controls style="margin-top:12px">
+            <source src="videos_gerados/02_Normas_Regulamentadoras.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo HTML5.
+        </video>
+    </div>
+</div>
+
+<!-- ==================== ATERRAMENTO ==================== -->
+<div id="page-aterramento" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="show('page-menu')">← Voltar</button>
+        <span class="page-title">Aterramento Elétrico</span>
+    </div>
+    <div class="video-wrap">
+        <video controls>
+            <source src="videos_gerados/01_Aterramento_Eletrico.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo HTML5.
+        </video>
+    </div>
+    <div class="video-desc">
+        <h3>Tópicos abordados:</h3>
+        <ul>
+            <li>Definição e função principal do aterramento elétrico (NBR 5410)</li>
+            <li>Componentes: eletrodo, condutor de aterramento, barramento e fio PE (verde/amarelo)</li>
+            <li>Sistemas TN (residencial), TT (com DR obrigatório) e IT (hospitais)</li>
+            <li>Subclasses TN-S (separado), TN-C (proibido em novas instalações) e TN-C-S</li>
+            <li>Resistência ideal: menor que 10 Ω (5 Ω para sistemas sensíveis)</li>
+            <li>Tensão de passo e proteção contra descargas atmosféricas (SPDA)</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ==================== PRIMEIROS SOCORROS ==================== -->
+<div id="page-socorros" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="show('page-menu')">← Voltar</button>
+        <span class="page-title">Primeiros Socorros</span>
+    </div>
+    <div class="video-wrap">
+        <video controls>
+            <source src="videos_gerados/03_Aterramento_PrimeirosSocorros.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo HTML5.
+        </video>
+    </div>
+    <div class="video-desc">
+        <h3>Tópicos abordados:</h3>
+        <ul>
+            <li>Definição de primeiros socorros e importância de manter a calma</li>
+            <li>Protocolo ABC: Vias aéreas / Respiração / Circulação e hemorragias</li>
+            <li>Queimaduras: água corrente fria (mín. 10 min) — NUNCA gelo, pasta de dente ou manteiga</li>
+            <li>Engasgo: obstrução parcial (incentivar tosse) x total (Manobra de Heimlich)</li>
+            <li>Regra de ouro: NUNCA mova vítima de trauma sem imobilização prévia</li>
+            <li>Números de emergência: 192 (SAMU) e 193 (Bombeiros)</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ==================== QUIZ ==================== -->
+<div id="page-quiz" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="show('page-menu')">← Voltar</button>
+        <span class="page-title">Simulado — 100 Questões</span>
+    </div>
+    <div class="quiz-wrap">
+        <div class="quiz-top">
+            <span class="quiz-progress" id="qprogress">Questão 1/100</span>
+            <span class="quiz-score" id="qscore">Acertos: 0</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="qbar" style="width:1%"></div></div>
+        <div id="quiz-body">
+            <p class="quiz-question" id="qquestion">Carregando...</p>
+            <div id="qoptions"></div>
+            <div id="qfeedback" class="quiz-feedback"></div>
+            <button id="qnext" class="quiz-next" onclick="nextQ()">PRÓXIMA QUESTÃO ➡</button>
+        </div>
     </div>
 </div>
 
 <script>
-    const questions = [
-        // QUESTÕES EXTRAÍDAS DOS SEUS MATERIAIS (NR-10, Aterramento, Extintores, Socorros)
-        {p: "Qual o principal objetivo das NRs?", o: ["Lucro da empresa", "Segurança e saúde do trabalhador", "Multar empresas", "Burocracia"], r: 1, e: "As NRs visam prevenir acidentes e doenças ocupacionais."},
-        {p: "No sistema IT, o que ocorre na primeira falha?", o: ["Desligamento imediato", "Curto-circuito", "O sistema continua operando e o DSI avisa", "O motor queima"], r: 2, e: "O sistema IT foca na continuidade do serviço (Ex: Hospitais)."},
-        {p: "O que caracteriza o fogo de Classe C?", o: ["Papel e madeira", "Líquidos inflamáveis", "Equipamentos elétricos energizados", "Metais"], r: 2, e: "Classe C envolve risco elétrico. Nunca use água!"},
-        {p: "Qual a função do fio Terra?", o: ["Fazer o aparelho ligar", "Economizar energia", "Proteção contra choques (corrente de fuga)", "Substituir o neutro"], r: 2, e: "O Terra desvia a corrente de falha para o solo."},
-        {p: "O que é o Tetraedro do Fogo?", o: ["Água, Ar e Terra", "Combustível, Comburente, Calor e Reação em Cadeia", "Pó, Gás e Espuma", "Fogo, Fumaça e Calor"], r: 1, e: "A reação em cadeia é o 4º elemento que sustenta a chama."},
-        {p: "Na manobra de Heimlich, onde se aplica a pressão?", o: ["No pescoço", "Abaixo das costelas (boca do estômago)", "Nas costas", "No peito"], r: 1, e: "A compressão em 'J' expulsa o objeto das vias aéreas."},
-        {p: "Trabalhador HABILITADO na NR-10 é aquele que:", o: ["Tem experiência", "Tem curso técnico e registro no conselho de classe", "Recebeu treinamento interno", "Sabe trocar disjuntor"], r: 1, e: "Habilitado exige conselho profissional (Ex: CRT ou CREA)."},
-        {p: "O extintor de CO2 é indicado para qual classe?", o: ["Classe A apenas", "Classes B e C (não conduz eletricidade)", "Classe D", "Somente papel"], r: 1, e: "O CO2 é um gás limpo que não estraga eletrônicos nem conduz energia."},
-        {p: "Qual a NR que trata de EPI?", o: ["NR-01", "NR-06", "NR-10", "NR-35"], r: 1, e: "A NR-06 define as regras de fornecimento e uso de EPIs."},
-        {p: "O que fazer em caso de queimadura térmica?", o: ["Passar manteiga", "Furar bolhas", "Lavar com água corrente fria", "Passar pasta de dente"], r: 2, e: "Água corrente resfria o tecido sem causar infecções."},
-        // ... (A lista continua abaixo até 100 questões)
-    ];
+function show(id) {
+    document.getElementById('page-menu').style.display = id === 'page-menu' ? 'flex' : 'none';
+    ['page-nr','page-aterramento','page-socorros','page-quiz'].forEach(p => {
+        document.getElementById(p).classList.toggle('active', p === id);
+    });
+    if (id === 'page-quiz') initQuiz();
+}
 
-    // Gerando mais questões baseadas no seu material para completar o array
-    const temas = [
-        {p: "O que significa PGR?", o: ["Plano Geral de Rodovias", "Programa de Gerenciamento de Riscos", "Projeto de Gasto", "Ponto de Gestão"], r: 1, e: "O PGR é a base da NR-01 para gerir perigos."},
-        {p: "Qual a validade do treinamento básico da NR-10?", o: ["1 ano", "2 anos", "5 anos", "Vitalício"], r: 1, e: "A reciclagem deve ser feita a cada dois anos."},
-        {p: "A CIPA é formada por representantes de quem?", o: ["Apenas patrão", "Apenas empregados", "Empregador e Empregados", "Governo"], r: 2, e: "A CIPA é paritária (50/50)."},
-        {p: "Qual a função do Dispositivo DR?", o: ["Proteger contra raios", "Detectar fuga de corrente e evitar choques", "Ligar o motor", "Medir o consumo"], r: 1, e: "O DR desarma ao detectar correntes que fogem do circuito (choque)."},
-        {p: "Insalubridade gera adicional sobre o quê?", o: ["Salário Base", "Salário Mínimo", "Hora Extra", "Lucros"], r: 1, e: "Regra geral: incide sobre o salário mínimo (10%, 20% ou 40%)."},
-        {p: "Periculosidade gera qual percentual?", o: ["10%", "20%", "30%", "40%"], r: 2, e: "O adicional de periculosidade é fixo em 30% sobre o salário base."},
-        {p: "O que é Tensão de Passo?", o: ["Tensão na mão", "Diferença de potencial entre os pés no solo", "Caminhar rápido", "Tensão no poste"], r: 1, e: "Comum em quedas de fios de alta tensão."},
-        {p: "O que significa SESMT?", o: ["Setor de Saúde", "Serviço Especializado em Engenharia de Segurança e em Medicina do Trabalho", "Sistema de Segurança", "Secretaria de Trabalho"], r: 1, e: "Composto por profissionais de segurança da empresa."},
-        {p: "Distância máxima para extintor em risco alto?", o: ["10m", "15m", "20m", "30m"], r: 1, e: "Em riscos altos, o extintor deve estar mais próximo."},
-        {p: "O que é contato indireto?", o: ["Tocar no fio vivo", "Tocar na carcaça de uma máquina que está eletrizada por falha", "Olhar o quadro", "Usar luva"], r: 1, e: "O aterramento protege exatamente contra o contato indireto."}
-    ];
+// ===== BANCO DE QUESTÕES (100 únicas) =====
+const BANCO = [
+    // ATERRAMENTO ELÉTRICO (1-25)
+    {p:"O que é aterramento elétrico?", o:["Ligação de fios sem isolamento","Conexão intencional de partes metálicas ao solo para dissipação de correntes de fuga","Instalação de disjuntores","Conexão do neutro ao quadro"], r:1, e:"O aterramento cria caminho seguro para correntes de fuga, protegendo pessoas e equipamentos."},
+    {p:"Qual norma torna o aterramento obrigatório em obras novas e reformas no Brasil desde 2006?", o:["NR-10","NBR 5410","NBR 14136","NR-01"], r:1, e:"A ABNT NBR 5410 regulamenta instalações elétricas de baixa tensão e tornou o aterramento obrigatório."},
+    {p:"Qual é a resistência máxima recomendada para o aterramento?", o:["50 Ω","25 Ω","10 Ω","1 Ω"], r:2, e:"A meta é resistência menor que 10 Ω, idealmente menor que 5 Ω para sistemas sensíveis."},
+    {p:"Qual a função do fio verde/amarelo (PE) no sistema elétrico?", o:["Conduzir a corrente de retorno (neutro)","Ligar o equipamento à rede","Proteger pessoas conectando as carcaças ao terra","Substituir o disjuntor"], r:2, e:"O condutor de proteção (PE) conecta carcaças metálicas ao barramento de terra."},
+    {p:"No sistema TN, o que caracteriza o TN-S?", o:["Neutro e proteção combinados em um único condutor (PEN)","Sem aterramento direto da fonte","Condutores neutro (N) e proteção (PE) separados desde a origem","Uso exclusivo em hospitais"], r:2, e:"TN-S é o mais seguro e mais utilizado atualmente — condutores N e PE fisicamente separados."},
+    {p:"O sistema TN-C é proibido em instalações novas por qual motivo?", o:["É muito caro","Combina neutro e proteção no PEN — risco de choque em caso de interrupção","Exige DR obrigatório","Só funciona em hospitais"], r:1, e:"Se o PEN for interrompido, as carcaças ficam energizadas, representando risco grave."},
+    {p:"Em qual situação o sistema IT é utilizado?", o:["Residências comuns","Comércios pequenos","Hospitais e salas cirúrgicas onde a energia não pode parar","Chuveiros elétricos"], r:2, e:"No sistema IT não há aterramento direto da fonte — prioriza continuidade de serviço em instalações críticas."},
+    {p:"O sistema TT exige obrigatoriamente qual dispositivo?", o:["Disjuntor termomagnético","Fusível","Dispositivo DR (diferencial residual)","Voltímetro"], r:2, e:"No sistema TT os aterramentos são independentes, e o DR é obrigatório para detectar falhas."},
+    {p:"Qual instrumento é usado para medir a resistência do aterramento?", o:["Multímetro","Amperímetro","Terrômetro","Voltímetro"], r:2, e:"O terrômetro mede a resistência de aterramento do sistema elétrico."},
+    {p:"Qual o comprimento mínimo da haste de aterramento residencial?", o:["1,0 m","1,5 m","2,4 m","5,0 m"], r:2, e:"A haste deve ter entre 2,4 m e 3,0 m de comprimento para garantir contato adequado com o solo."},
+    {p:"Qual é o material padrão da haste de aterramento?", o:["Alumínio ou PVC","Aço cobreado ou cobre puro","Ferro galvanizado","Zinco"], r:1, e:"Hastes de aço cobreado ou cobre puro garantem boa condutividade e resistência à corrosão."},
+    {p:"O que faz o aterramento acionar o disjuntor em caso de falha?", o:["Aumenta a tensão","Cria caminho de baixa resistência que eleva bruscamente a corrente","Diminui a frequência","Desliga o neutro"], r:1, e:"A corrente de fuga flui pelo terra criando um curto que força o disjuntor a desarmar."},
+    {p:"Qual a diferença entre fio neutro e fio terra?", o:["São idênticos","Neutro é o condutor de retorno; Terra é o condutor de proteção (atua só em falha)","Terra é o fio vermelho","Neutro protege contra choques"], r:1, e:"O neutro faz o circuito funcionar; o terra só age quando há falha de isolamento."},
+    {p:"Para que serve o barramento de terra no quadro elétrico?", o:["Proteger contra raios","Ser ponto de conexão comum para todos os condutores de proteção","Medir a tensão","Ligar os disjuntores"], r:1, e:"O barramento centraliza as conexões de todos os fios PE do sistema."},
+    {p:"A Tensão de Passo é gerada quando:", o:["Um disjuntor desarma","Há diferença de potencial entre os dois pés no solo (ex: fio caído)","O neutro é interrompido","O DR atua"], r:1, e:"A tensão de passo é perigosa próxima a fios de alta tensão caídos no chão."},
+    {p:"Qual a distância mínima da haste de aterramento à edificação?", o:["0,5 m","1 m","2 m","5 m"], r:2, e:"A NBR 5410 recomenda distância mínima de 2 m da edificação para a haste."},
+    {p:"O que é o SPDA (para-raios)?", o:["Sistema para desligar a rede","Sistema de Proteção Contra Descargas Atmosféricas, que usa o aterramento para escoar raios","Proteção contra roubos","Estabilizador de tensão"], r:1, e:"Sem aterramento, a descarga do raio não seria escoada ao solo, causando incêndios."},
+    {p:"O condutor de aterramento (fio que liga haste ao quadro) deve ter no mínimo:", o:["1,5 mm²","4 mm²","10 mm² de cobre nu","25 mm²"], r:2, e:"A NBR 5410 exige condutor de cobre nu com seção mínima de 10 mm²."},
+    {p:"O que caracteriza o contato indireto com eletricidade?", o:["Tocar no fio vivo diretamente","Tocar na carcaça de uma máquina eletrizada por falha de isolamento","Olhar para o quadro","Cheiro de queimado"], r:1, e:"O aterramento existe exatamente para proteger contra o contato indireto."},
+    {p:"Qual dos sistemas de aterramento é mais comum em residências?", o:["IT","TT","TN","SPDA"], r:2, e:"O sistema TN é o mais utilizado em instalações residenciais e comerciais."},
+    {p:"Quantas subclasses possui o sistema TN?", o:["1","2","3","4"], r:2, e:"TN-S (separado), TN-C (combinado) e TN-C-S (misto)."},
+    {p:"Por que o solo úmido afeta a resistência do aterramento?", o:["Não afeta","Solo úmido reduz a resistência, melhorando a condutividade","Solo úmido aumenta a resistência","Apenas temperatura importa"], r:1, e:"A umidade do solo melhora o contato elétrico com a haste, reduzindo a resistência."},
+    {p:"O que é o condutor PEN?", o:["Proteção Extra Neutro — fio de emergência","Condutor que combina funções de neutro e proteção — usado no TN-C","Parafuso de fixação","Proteção Especial Noturna"], r:1, e:"PEN = Protective Earth Neutral. Proibido em instalações novas pelo risco de choque."},
+    {p:"Qual a resistência ideal para sistemas sensíveis (computadores, UTIs)?", o:["Menor que 25 Ω","Menor que 10 Ω","Menor que 5 Ω","Qualquer valor"], r:2, e:"Para sistemas sensíveis recomenda-se resistência de aterramento menor que 5 Ω."},
+    {p:"Como a corrente de fuga se dissipa pelo aterramento?", o:["Pela carcaça do equipamento","Pelo fio terra → eletrodo (haste) → solo, que absorve a carga elétrica","Pelo disjuntor direto","Pelo neutro"], r:1, e:"A corrente percorre o fio PE, passa pela haste enterrada e se dispersa no solo."},
 
-    // Loop para multiplicar questões e simular as 100 (ajuste os textos conforme quiser)
-    while(questions.length < 100) {
-        let randomTema = temas[Math.floor(Math.random() * temas.length)];
-        questions.push({...randomTema, p: questions.length + 1 + ". " + randomTema.p});
+    // NORMAS REGULAMENTADORAS (26-60)
+    {p:"O que são as Normas Regulamentadoras (NRs)?", o:["Leis municipais","Padrões obrigatórios de segurança e saúde para empregadores e empregados da CLT","Normas voluntárias de qualidade","Regras apenas para indústrias"], r:1, e:"As NRs são fiscalizadas pelo Ministério do Trabalho e Emprego (MTE)."},
+    {p:"Qual NR é chamada de 'Norma Mãe'?", o:["NR-05","NR-06","NR-01","NR-10"], r:2, e:"A NR-01 estabelece as diretrizes gerais que regem todas as demais normas."},
+    {p:"O que significa GRO na NR-01?", o:["Grupo de Regulação Operacional","Gerenciamento de Riscos Operacionais","Gestão de Recursos Organizacionais","Guia de Risco e Ordem"], r:1, e:"O GRO é o foco principal da NR-01 — gerenciar os riscos presentes no trabalho."},
+    {p:"O PGR é composto por quais dois documentos?", o:["PCMSO e PPRA","Inventário de Riscos e Plano de Ação","Laudo e CAT","SIPAT e CIPA"], r:1, e:"O Programa de Gerenciamento de Riscos une o Inventário de Riscos ao Plano de Ação."},
+    {p:"O que é o Direito de Recusa previsto na NR-01?", o:["Direito de não usar EPI","Direito de recusar atividade que ofereça risco grave e iminente","Direito de não trabalhar horas extras","Direito de recusar treinamentos"], r:1, e:"O trabalhador pode recusar tarefas de risco grave e iminente sem sofrer penalidades."},
+    {p:"Para que serve o Inventário de Riscos do PGR?", o:["Listar os funcionários","Descrever os perigos e classificar os riscos presentes na empresa","Registrar acidentes passados","Calcular salários"], r:1, e:"O Inventário identifica e classifica todos os riscos e perigos do ambiente de trabalho."},
+    {p:"Qual NR cria a CIPA?", o:["NR-01","NR-06","NR-05","NR-10"], r:2, e:"A NR-05 regulamenta a Comissão Interna de Prevenção de Acidentes."},
+    {p:"A CIPA é formada por representantes de:", o:["Apenas empregados","Apenas empregador","Empregador e empregados (paritária)","Governo e empresa"], r:2, e:"A CIPA tem composição paritária: 50% indicados pelo empregador, 50% eleitos pelos empregados."},
+    {p:"Qual o mandato dos membros eleitos da CIPA?", o:["6 meses","1 ano com possibilidade de 1 reeleição","2 anos sem reeleição","3 anos"], r:1, e:"Mandato de 1 ano com direito a uma reeleição."},
+    {p:"Qual NR trata dos Equipamentos de Proteção Individual?", o:["NR-01","NR-05","NR-06","NR-35"], r:2, e:"A NR-06 define as obrigações de empregadores e empregados quanto aos EPIs."},
+    {p:"O empregador é obrigado a fornecer EPIs de forma:", o:["Paga, descontando do salário","Gratuita","Emprestada","Opcional"], r:1, e:"A NR-06 determina fornecimento gratuito, obrigatório e adequado ao risco."},
+    {p:"Quais são as obrigações do empregado em relação ao EPI?", o:["Pode recusar o uso","Usar efetivamente, comunicar problemas e cumprir as regras","Vender ou trocar","Usar apenas quando quiser"], r:1, e:"O não uso do EPI pelo empregado constitui ato faltoso, podendo resultar em demissão."},
+    {p:"Qual NR trata de segurança em instalações e serviços em eletricidade?", o:["NR-05","NR-10","NR-15","NR-17"], r:1, e:"A NR-10 regula todo trabalho com instalações elétricas."},
+    {p:"Trabalhador HABILITADO na NR-10 é aquele que:", o:["Tem experiência prática","Fez curso técnico e possui registro no conselho de classe (ex: CREA)","Recebeu treinamento interno","Sabe trocar lâmpadas"], r:1, e:"Habilitado = qualificação + registro no conselho profissional competente."},
+    {p:"Trabalhador QUALIFICADO na NR-10 é aquele que:", o:["Tem registro no CREA","Concluiu curso específico na área elétrica e tem certificado profissionalizante","Trabalha há 10 anos","Passou em treinamento interno"], r:1, e:"Qualificado exige certificado profissionalizante — não necessariamente registro em conselho."},
+    {p:"Trabalhador CAPACITADO na NR-10 é aquele que:", o:["Tem superior completo","Possui CREA","Recebeu treinamentos por profissional habilitado ou qualificado","É engenheiro eletricista"], r:2, e:"O capacitado é treinado para tarefas específicas por profissional habilitado ou qualificado."},
+    {p:"O que é o Prontuário na NR-10?", o:["Lista de funcionários","Registro que comprova que as instalações elétricas são seguras e conformes à NR-10","Ficha médica","Relatório de acidentes"], r:1, e:"O Prontuário documenta a conformidade das instalações elétricas."},
+    {p:"Qual a sequência correta das medidas de controle da NR-10?", o:["Sinalizar → Ligar → Testar","Desenergizar → Seccionar → Verificar ausência de tensão → Aterrar → Sinalizar","Energizar → Isolar → Trabalhar","Testar → Aterrar → Ligar"], r:1, e:"A sequência protege o trabalhador antes de qualquer intervenção em instalação elétrica."},
+    {p:"Qual NR trata de Atividades e Operações Insalubres?", o:["NR-10","NR-15","NR-16","NR-17"], r:1, e:"A NR-15 regulamenta as atividades que causam dano progressivo à saúde."},
+    {p:"Qual é o foco principal da NR-15?", o:["Risco imediato de morte","Dano progressivo à saúde por exposição a agentes físicos, químicos ou biológicos","Ergonomia","Trabalho em altura"], r:1, e:"Insalubridade = dano progressivo (diferente de periculosidade = risco imediato)."},
+    {p:"Quais são os graus de insalubridade e seus percentuais?", o:["Leve (5%), Grave (15%), Crítico (25%)","Mínimo (10%), Médio (20%), Máximo (40%) sobre salário mínimo","10%, 25% e 50% sobre salário base","5%, 10% e 20% sobre salário base"], r:1, e:"Os percentuais incidem sobre o salário mínimo vigente."},
+    {p:"O adicional de periculosidade (NR-16) é de:", o:["10% sobre salário mínimo","20% sobre salário base","30% sobre salário base","40% sobre salário mínimo"], r:2, e:"A NR-16 estabelece adicional fixo de 30% sobre o salário base contratual."},
+    {p:"Qual a diferença entre insalubridade (NR-15) e periculosidade (NR-16)?", o:["São iguais","NR-15: dano progressivo à saúde. NR-16: risco de fatalidade imediata","NR-15 é só para químicos. NR-16 é para barulho","NR-15 paga mais"], r:1, e:"Insalubridade compromete saúde ao longo do tempo; periculosidade coloca a vida em risco imediato."},
+    {p:"Qual NR trata de Ergonomia?", o:["NR-06","NR-15","NR-17","NR-35"], r:2, e:"A NR-17 visa adaptar as condições de trabalho às características psicofisiológicas do trabalhador."},
+    {p:"O objetivo da NR-17 é:", o:["Punir empresas","Adaptar as condições de trabalho ao trabalhador para prevenir LER/DORT","Fornecer EPIs","Regular trabalho elétrico"], r:1, e:"A ergonomia considera mobiliário, equipamentos, ritmo e conforto para prevenir doenças ocupacionais."},
+    {p:"Quando o EPI deve ser usado conforme a hierarquia de controle?", o:["Sempre, independente de EPCs","Somente quando for inviável o EPC, enquanto o EPC é implantado ou em emergências","Nunca, EPCs são suficientes","Antes dos EPCs"], r:1, e:"O EPC é prioridade — o EPI é a ÚLTIMA linha de defesa do trabalhador."},
+    {p:"O empregador que não cumpre as NRs pode sofrer:", o:["Apenas advertência verbal","Multas, embargos, interdições e ações trabalhistas e cíveis","Somente multa","Nenhuma punição"], r:1, e:"As punições variam conforme gravidade: multa, embargo de obra ou interdição do estabelecimento."},
+    {p:"O empregado que não usa os EPIs pode ser:", o:["Apenas orientado","Advertido, suspenso ou demitido por ato faltoso","Multado pela empresa","Enviado a reabilitação"], r:1, e:"A recusa injustificada ao uso de EPI é ato faltoso conforme a CLT."},
+    {p:"Qual órgão fiscaliza as NRs?", o:["ANVISA","INSS","Ministério do Trabalho e Emprego (MTE)","Receita Federal"], r:2, e:"O MTE tem Auditores Fiscais do Trabalho responsáveis pela fiscalização."},
+    {p:"As NRs se aplicam a quem?", o:["Apenas empresas com mais de 50 funcionários","Apenas indústrias","Todos os empregadores e empregados regidos pela CLT","Apenas empresas públicas"], r:2, e:"As NRs são obrigatórias para toda empresa que tenha empregados com vínculo CLT."},
+    {p:"O que são Normas Setoriais?", o:["Normas gerais para todos","Normas para segmentos específicos da economia que exigem conhecimento especializado","Normas só para o setor elétrico","Normas voluntárias"], r:1, e:"Ex: NR-18 (construção civil), NR-20 (combustíveis), NR-31 (agricultura)."},
+    {p:"Qual NR trata de Trabalho em Altura?", o:["NR-10","NR-17","NR-35","NR-06"], r:2, e:"A NR-35 regulamenta atividades realizadas acima de 2 metros do nível de referência."},
+    {p:"O SESMT é composto por:", o:["Somente médicos","Profissionais de Engenharia de Segurança e Medicina do Trabalho da empresa","Fiscais do governo","Membros da CIPA"], r:1, e:"SESMT = Serviço Especializado em Engenharia de Segurança e em Medicina do Trabalho."},
+    {p:"Qual NR regulamenta o PCMSO?", o:["NR-07","NR-09","NR-15","NR-01"], r:0, e:"A NR-07 trata do Programa de Controle Médico de Saúde Ocupacional."},
+    {p:"A validade do treinamento básico da NR-10 é de:", o:["1 ano","2 anos","5 anos","Vitalício"], r:1, e:"A reciclagem deve ser feita a cada 2 anos ou quando houver mudança nas condições de risco."},
+
+    // PRIMEIROS SOCORROS (61-85)
+    {p:"O que são primeiros socorros?", o:["Tratamento médico definitivo","Atendimento imediato e temporário para preservar a vida e estabilizar a vítima até o socorro médico","Cirurgia de emergência","Aplicação de medicamentos"], r:1, e:"Primeiros socorros são temporários — o objetivo é preservar a vida e evitar agravamento."},
+    {p:"Qual protocolo define a ordem de prioridade no atendimento de vítimas?", o:["Protocolo XYZ","Protocolo ABC","Protocolo 123","Protocolo DEF"], r:1, e:"ABC: A (Vias Aéreas/Coluna), B (Respiração), C (Circulação/Hemorragias)."},
+    {p:"O que representa a letra 'A' no Protocolo ABC?", o:["Atendimento","Acidente","Vias Aéreas e proteção da Coluna cervical","Amputação"], r:2, e:"Verificar se as vias aéreas estão desobstruídas e proteger a coluna em caso de trauma."},
+    {p:"O que representa a letra 'B' no Protocolo ABC?", o:["Batimento cardíaco","Breathing — checar se a vítima está respirando","Braço","Boca"], r:1, e:"Em paradas respiratórias, inicia-se a ventilação artificial."},
+    {p:"O que representa a letra 'C' no Protocolo ABC?", o:["Cabeça","Coluna","Circulação e controle de hemorragias","Calor"], r:2, e:"Nas paradas cardíacas modernas, o 'C' (compressões) é priorizado antes mesmo do 'A' e 'B'."},
+    {p:"Por que é importante manter a calma ao socorrer uma vítima?", o:["Não é importante","Garante raciocínio lógico, aplicação correta dos protocolos e transmite segurança à vítima","Para não assustar os outros","Para registrar o acidente"], r:1, e:"A calma evita erros e piora do estado de choque da vítima."},
+    {p:"Qual o correto procedimento para queimadura térmica?", o:["Passar manteiga","Furar bolhas para aliviar","Lavar com água corrente fria por mínimo 10 minutos","Aplicar gelo diretamente"], r:2, e:"Água corrente fria resfria o tecido sem risco de infecção. NUNCA use gelo, pasta ou manteiga."},
+    {p:"Por que NUNCA se deve usar gelo em queimaduras?", o:["É caro","Pode causar queimadura por frio (queimadura adicional) e piorar o quadro","Não é prático","Não existe essa regra"], r:1, e:"O gelo causa vasoconstrição intensa e pode provocar queimadura por congelamento."},
+    {p:"Por que NUNCA se deve furar bolhas de queimadura?", o:["Não existe esse risco","Furar bolhas aumenta o risco de infecção grave","Dói muito","Não muda nada"], r:1, e:"A bolha é uma proteção natural. Furá-la expõe o tecido lesado a bactérias."},
+    {p:"Como tratar uma queimadura de 3º grau no local?", o:["Aplicar creme antibiético","Furar bolhas e lavar","Cobrir levemente com pano limpo e encaminhar ao hospital imediatamente","Aplicar óleo"], r:2, e:"Queimaduras de 3º grau precisam de cuidados hospitalares urgentes."},
+    {p:"Qual a manobra para desobstrução de vias aéreas em adulto consciente com engasgo total?", o:["Dar água para engolir","Bater nas costas","Manobra de Heimlich — compressões abdominais acima do umbigo","Colocar o dedo na garganta"], r:2, e:"Heimlich: comprimir para dentro e para cima entre o umbigo e o esterno."},
+    {p:"No caso de engasgo com obstrução PARCIAL, o que fazer?", o:["Aplicar Heimlich imediatamente","Incentivar a tosse forte (a via aérea ainda tem passagem de ar)","Dar tapas nas costas com força","Chamar o SAMU e aguardar"], r:1, e:"Com obstrução parcial, a tosse é o mecanismo mais eficaz para expelir o objeto."},
+    {p:"Por que NUNCA se deve mover uma vítima de trauma sem imobilização prévia?", o:["Não existe essa regra","Risco de lesão medular permanente (paraplegia ou tetraplegia)","A vítima vai sentir dor","Por questão legal"], r:1, e:"Mover sem imobilizar pode seccionar a medula espinhal e causar paralisia permanente."},
+    {p:"Quais os números de emergência que devem ser acionados?", o:["190 e 192","192 (SAMU) e 193 (Bombeiros)","180 e 190","100 e 200"], r:1, e:"192 = SAMU, 193 = Corpo de Bombeiros. Acionar garante suporte avançado em rota."},
+    {p:"Por que acionar a emergência (192/193) o quanto antes?", o:["Para registrar o acidente","Para que suporte avançado já esteja a caminho e receber orientações por telefone","Para chamar a família","Por obrigação legal"], r:1, e:"Profissionais podem orientar o socorrista leigo por telefone enquanto se deslocam."},
+    {p:"O que é controlar uma hemorragia?", o:["Remover o objeto que causou o corte","Aplicar pressão firme no local para reduzir o sangramento","Lavar com água quente","Elevar o coração"], r:1, e:"Pressão direta com tecido limpo é a primeira medida para controlar hemorragias externas."},
+    {p:"Qual a posição correta para vítima inconsciente que respira (sem trauma de coluna)?", o:["De bruços","Sentada","Posição lateral de segurança (PLS)","Em pé, apoiada"], r:2, e:"A PLS evita que a vítima aspire vômito ou secreções, mantendo via aérea livre."},
+    {p:"Em parada cardiorrespiratória, qual a prioridade atual segundo as diretrizes?", o:["Respiração artificial primeiro","Compressões torácicas (C do ABC) vêm primeiro","Desfibrilação primeiro","Chamar médico primeiro"], r:1, e:"Diretrizes modernas (AHA) priorizam compressões: 30 compressões para 2 ventilações."},
+    {p:"O socorrista leigo deve se preocupar principalmente em:", o:["Diagnosticar a doença","NÃO agravar o estado da vítima e garantir que socorro profissional chegue o quanto antes","Aplicar medicamentos","Realizar cirurgias"], r:1, e:"O socorrista leigo não deve ultrapassar seus limites de capacitação."},
+    {p:"Qual NR aborda a saúde ocupacional e implantação de programas de saúde?", o:["NR-05","NR-07","NR-10","NR-17"], r:1, e:"A NR-07 regulamenta o PCMSO — Programa de Controle Médico de Saúde Ocupacional."},
+    {p:"Em caso de choque elétrico, o que fazer PRIMEIRO?", o:["Tocar na vítima para ajudá-la","Desligar a fonte de energia ou afastar a vítima com material isolante","Dar água à vítima","Chamar a família"], r:1, e:"Nunca toque na vítima sem desligar a corrente — você pode ser eletrocutado também."},
+    {p:"O que é Parada Cardiorrespiratória (PCR)?", o:["Tontura leve","Cessação simultânea da respiração e dos batimentos cardíacos","Ferimento superficial","Desmaio simples"], r:1, e:"Na PCR, o coração para de bombear sangue e a respiração cessa — situação de risco de morte imediato."},
+    {p:"A Manobra de Heimlich em bebês deve ser feita:", o:["Igual ao adulto","Com compressões nas costas e no tórax (não no abdômen)","Com golpes na cabeça","Não se aplica Heimlich em bebês"], r:1, e:"Em bebês, a técnica é adaptada: 5 golpes nas costas + 5 compressões no tórax."},
+    {p:"O que fazer em caso de suspeita de fratura?", o:["Mover o membro para testar a dor","Imobilizar o membro na posição encontrada e acionar socorro","Massagear a área","Aplicar calor"], r:1, e:"Imobilizar sem tentar realinhar ossos — isso é função do médico."},
+    {p:"Qual a duração mínima de resfriamento com água para queimaduras?", o:["2 minutos","5 minutos","10 minutos","30 minutos"], r:2, e:"Mínimo de 10 minutos de água corrente fria para garantir dissipação do calor do tecido."},
+
+    // EXTINTORES E INCÊNDIO (86-100)
+    {p:"O que é o Tetraedro do Fogo?", o:["Triângulo com 3 elementos","Combustível, Comburente, Calor e Reação em Cadeia — 4 elementos para existir fogo","Apenas calor e combustível","Fogo, fumaça e calor"], r:1, e:"A reação em cadeia é o 4º elemento — removendo qualquer um deles, o fogo se apaga."},
+    {p:"O fogo de Classe A envolve:", o:["Líquidos inflamáveis","Equipamentos elétricos","Materiais sólidos com brasa residual: madeira, papel, tecido","Metais combustíveis"], r:2, e:"Classe A é combatida com extintor de água ou pó ABC."},
+    {p:"O fogo de Classe B envolve:", o:["Madeira e papel","Líquidos inflamáveis e gases: gasolina, álcool, GLP","Equipamentos elétricos","Metais"], r:1, e:"Classe B usa extintor de pó BC, CO2 ou espuma."},
+    {p:"O fogo de Classe C envolve:", o:["Madeira","Papel","Equipamentos elétricos energizados","Metais combustíveis"], r:2, e:"Classe C: NUNCA use água (risco de choque). Use CO2 ou pó BC."},
+    {p:"O fogo de Classe D envolve:", o:["Papel e papelão","Gasolina","Equipamentos elétricos","Metais combustíveis como magnésio e titânio"], r:3, e:"Classe D é rara e exige extintor especial (pó metálico)."},
+    {p:"Qual extintor NÃO pode ser usado em fogo de equipamentos elétricos (Classe C)?", o:["CO2","Pó BC","Água (condutor elétrico — risco de choque)","Pó ABC"], r:2, e:"A água conduz eletricidade e pode causar choque elétrico no operador."},
+    {p:"O extintor de CO2 é indicado para:", o:["Classe A apenas","Classes B e C — não conduz eletricidade e não deixa resíduo","Classe D","Todos os tipos"], r:1, e:"CO2 é ideal para equipamentos eletrônicos pois não danifica e não conduz eletricidade."},
+    {p:"Qual a distância máxima de um extintor em áreas de risco alto?", o:["10 m","15 m","20 m","30 m"], r:1, e:"Em risco alto, o extintor deve estar mais próximo para resposta imediata."},
+    {p:"Como se apaga o fogo pelo método de sufocamento?", o:["Removendo o calor com água","Removendo o comburente (oxigênio) do fogo","Removendo o combustível","Usando reação química"], r:1, e:"Jogar areia ou usar extintor de CO2 reduz o oxigênio disponível, sufocando o fogo."},
+    {p:"Qual o extintor mais indicado para incêndios em cozinhas com óleo (Classe K)?", o:["CO2","Água","Extintor de pó químico úmido específico para Classe K","Espuma"], r:2, e:"Óleo em alta temperatura não pode receber água — reação violenta (explosão de vapor)."},
+    {p:"O método de RESFRIAMENTO combate o fogo ao:", o:["Remover o combustível","Remover o comburente","Remover o calor (reduzir a temperatura abaixo do ponto de ignição)","Interromper a reação em cadeia"], r:2, e:"Água é o agente de resfriamento mais eficaz para classes A."},
+    {p:"O extintor de pó ABC combate quais classes de fogo?", o:["Apenas A","B e C","A, B e C","D e K"], r:2, e:"O pó ABC é o mais versátil, indicado para as três classes mais comuns."},
+    {p:"Qual a validade de um extintor de incêndio (recarga)?", o:["1 ano","Cada 5 anos","Depende do tipo — geralmente anual ou conforme inspeção","Não tem validade"], r:2, e:"A inspeção visual é mensal; a recarga e teste hidrostático seguem normas específicas por tipo."},
+    {p:"O que é o PPCI?", o:["Programa de Primeiros Cuidados Internos","Plano de Prevenção e Proteção Contra Incêndios — exigido pelas normas de segurança","Protocolo de Pressão Contínua de Incêndio","Padrão de Proteção Civil Integrado"], r:1, e:"O PPCI é exigido pelos bombeiros e pela NR para edificações acima de determinado risco."},
+    {p:"O método de ISOLAMENTO combate o fogo ao:", o:["Resfriar com água","Cortar o suprimento de combustível (fechar válvula de gás, afastar materiais)","Usar extintor de CO2","Chamar os bombeiros"], r:1, e:"Remover ou isolar o combustível priva o fogo de seu 'alimento'."}
+];
+
+// ===== LÓGICA DO QUIZ =====
+let qIdx = 0, qScore = 0, qList = [];
+
+function initQuiz() {
+    qIdx = 0; qScore = 0;
+    qList = shuffle([...BANCO]).slice(0, 100);
+    renderQ();
+}
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
     }
+    return arr;
+}
 
-    let current = 0;
-    let score = 0;
+function renderQ() {
+    if (qIdx >= qList.length) { showEnd(); return; }
+    const q = qList[qIdx];
+    document.getElementById('qprogress').textContent = `Questão ${qIdx + 1}/${qList.length}`;
+    document.getElementById('qbar').style.width = `${((qIdx + 1) / qList.length) * 100}%`;
+    document.getElementById('qquestion').textContent = q.p;
+    document.getElementById('qfeedback').style.display = 'none';
+    document.getElementById('qnext').style.display = 'none';
 
-    function load() {
-        if(current >= questions.length) {
-            document.getElementById('quiz-content').innerHTML = `<h2>Fim do Simulado! 🏆</h2><p>Você acertou ${score} de ${questions.length}.</p><button class="btn next-btn" style="display:block" onclick="location.reload()">REINICIAR</button>`;
-            return;
-        }
-        const q = questions[current];
-        document.getElementById('progress').innerText = `Questão ${current + 1}/${questions.length}`;
-        document.getElementById('question').innerText = q.p;
-        const opts = document.getElementById('options');
-        opts.innerHTML = '';
-        document.getElementById('feedback').style.display = 'none';
-        document.getElementById('next-btn').style.display = 'none';
+    const opts = document.getElementById('qoptions');
+    opts.innerHTML = '';
+    const shuffled = q.o.map((text, i) => ({text, orig: i}));
+    shuffle(shuffled);
+    shuffled.forEach(({text, orig}) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-opt';
+        btn.textContent = text;
+        btn.onclick = () => checkQ(orig, q, shuffled);
+        opts.appendChild(btn);
+    });
+}
 
-        q.o.forEach((opt, i) => {
-            const b = document.createElement('button');
-            b.innerText = opt;
-            b.className = 'btn';
-            b.onclick = () => check(i);
-            opts.appendChild(b);
-        });
+function checkQ(chosen, q, shuffled) {
+    document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+    const btns = document.querySelectorAll('.quiz-opt');
+    btns.forEach((b, i) => {
+        if (shuffled[i].orig === q.r) b.classList.add('correct');
+        else if (shuffled[i].orig === chosen && chosen !== q.r) b.classList.add('wrong');
+    });
+    const fb = document.getElementById('qfeedback');
+    fb.style.display = 'block';
+    if (chosen === q.r) {
+        fb.className = 'quiz-feedback ok';
+        fb.innerHTML = `<b>✅ CORRETO!</b> ${q.e}`;
+        qScore++;
+        document.getElementById('qscore').textContent = `Acertos: ${qScore}`;
+    } else {
+        fb.className = 'quiz-feedback err';
+        fb.innerHTML = `<b>❌ INCORRETO!</b> A resposta certa era: <b>${q.o[q.r]}</b><br>${q.e}`;
     }
+    document.getElementById('qnext').style.display = 'block';
+}
 
-    function check(i) {
-        const q = questions[current];
-        const fb = document.getElementById('feedback');
-        const btns = document.querySelectorAll('#options .btn');
-        btns.forEach(b => b.disabled = true);
+function nextQ() { qIdx++; renderQ(); }
 
-        fb.style.display = 'block';
-        if(i === q.r) {
-            fb.className = 'feedback correct';
-            fb.innerHTML = `<b>✅ ACERTOU!</b><br>${q.e}`;
-            score++;
-            document.getElementById('score').innerText = `Acertos: ${score}`;
-        } else {
-            fb.className = 'feedback wrong';
-            fb.innerHTML = `<b>❌ ERROU!</b> A correta era: <b>${q.o[q.r]}</b><br>${q.e}`;
-        }
-        document.getElementById('next-btn').style.display = 'block';
-    }
-
-    document.getElementById('next-btn').onclick = () => {
-        current++;
-        load();
-    };
-
-    load();
+function showEnd() {
+    const pct = Math.round((qScore / qList.length) * 100);
+    let msg = pct >= 70 ? '🏆 Excelente! Você está preparado!' : pct >= 50 ? '👍 Bom resultado! Revise os erros.' : '📚 Continue estudando — você consegue!';
+    document.getElementById('quiz-body').innerHTML = `
+        <div class="quiz-end">
+            <h2>Simulado concluído!</h2>
+            <div class="final-score">${qScore}/${qList.length}</div>
+            <p>${pct}% de aproveitamento<br>${msg}</p>
+            <button class="quiz-restart" onclick="initQuiz()">REFAZER SIMULADO</button>
+        </div>`;
+}
 </script>
 </body>
 </html>
