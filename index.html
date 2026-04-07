@@ -73,6 +73,58 @@
         .quiz-end p { color: var(--muted); margin-bottom: 20px; }
         .quiz-restart { background: var(--primary); color: white; border: none; border-radius: 10px; padding: 14px 32px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
         .quiz-restart:hover { background: var(--primary-dark); }
+
+        /* ===== APRESENTAÇÃO NR-10 ===== */
+        .slides-wrap { position: relative; }
+        .slide { display: none; background: var(--card); border-radius: var(--radius); padding: 32px 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); min-height: 380px; flex-direction: column; justify-content: center; }
+        .slide.active { display: flex; }
+        .slide-cover { background: linear-gradient(135deg, #1a56db 0%, #0e3fa5 100%); color: white; text-align: center; align-items: center; }
+        .slide-cover h1 { font-size: 2rem; margin-bottom: 10px; }
+        .slide-cover .sub { font-size: 1rem; opacity: 0.85; margin-bottom: 6px; }
+        .slide-cover .badge { background: rgba(255,255,255,0.2); border-radius: 99px; padding: 4px 16px; font-size: 0.85rem; display: inline-block; margin-top: 10px; }
+        .slide h2 { color: var(--primary); font-size: 1.3rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+        .slide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+        .slide-card { background: #f8faff; border: 1px solid #dbeafe; border-radius: 10px; padding: 16px; }
+        .slide-card .sc-label { font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+        .slide-card .sc-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+        .slide-card .sc-body { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+        .slide-list { list-style: none; padding: 0; }
+        .slide-list li { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; line-height: 1.5; }
+        .slide-list li:last-child { border-bottom: none; }
+        .slide-list .bullet { font-size: 1.1rem; flex-shrink: 0; }
+        .slide-seq { display: flex; flex-direction: column; gap: 10px; }
+        .slide-seq-item { display: flex; align-items: center; gap: 14px; background: #f0f9ff; border-radius: 10px; padding: 12px 16px; }
+        .slide-seq-num { background: var(--primary); color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.95rem; flex-shrink: 0; }
+        .slide-seq-text strong { display: block; font-size: 0.95rem; color: var(--text); }
+        .slide-seq-text span { font-size: 0.82rem; color: var(--muted); }
+        .slide-warn { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 10px; padding: 14px 18px; margin-top: 14px; font-size: 0.9rem; color: #92400e; }
+        .slide-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media(max-width:600px){ .slide-two-col { grid-template-columns: 1fr; } }
+        .col-box { background: #f8faff; border: 1px solid #dbeafe; border-radius: 10px; padding: 16px; }
+        .col-box h3 { font-size: 0.95rem; color: var(--primary); margin-bottom: 10px; }
+        .col-box ul { padding-left: 18px; }
+        .col-box li { font-size: 0.88rem; color: var(--muted); margin-bottom: 5px; line-height: 1.4; }
+        .zone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        @media(max-width:600px){ .zone-grid { grid-template-columns: 1fr; } }
+        .zone-box { border-radius: 10px; padding: 14px; }
+        .zone-box.red { background: #fee2e2; border: 1px solid #fca5a5; }
+        .zone-box.yellow { background: #fef9c3; border: 1px solid #fde047; }
+        .zone-box.green { background: #d1fae5; border: 1px solid #6ee7b7; }
+        .zone-box.blue { background: #dbeafe; border: 1px solid #93c5fd; }
+        .zone-box h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; }
+        .zone-box p { font-size: 0.82rem; line-height: 1.4; }
+        .nbr-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .nbr-table th { background: var(--primary); color: white; padding: 10px 12px; text-align: left; }
+        .nbr-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        .nbr-table tr:nth-child(even) td { background: #f8faff; }
+        .slide-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; }
+        .slide-dots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+        .slide-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: 0.2s; }
+        .slide-dot.on { background: var(--primary); transform: scale(1.3); }
+        .snav-btn { background: var(--primary); color: white; border: none; border-radius: 8px; padding: 10px 22px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .snav-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+        .snav-btn:not(:disabled):hover { background: var(--primary-dark); }
+        .slide-counter { font-size: 0.85rem; color: var(--muted); }
     </style>
 </head>
 <body>
@@ -98,6 +150,11 @@
             <div class="icon">🚑</div>
             <h2>Primeiros Socorros</h2>
             <p>Protocolo ABC · Queimaduras · Engasgo · Hemorragias</p>
+        </div>
+        <div class="menu-card" onclick="show('page-nr10')">
+            <div class="icon">🔌</div>
+            <h2>NR-10 — Apresentação</h2>
+            <p>Segurança elétrica: perfis, zonas de risco, EPIs, sequência de controle e NBR 5410</p>
         </div>
         <div class="menu-card" onclick="show('page-quiz')">
             <div class="icon">🏆</div>
@@ -186,6 +243,247 @@
     </div>
 </div>
 
+<!-- ==================== NR-10 APRESENTAÇÃO ==================== -->
+<div id="page-nr10" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="show('page-menu')">← Voltar</button>
+        <span class="page-title">NR-10 — Segurança em Instalações Elétricas</span>
+    </div>
+    <div class="slides-wrap">
+
+        <!-- SLIDE 1: CAPA -->
+        <div class="slide slide-cover active" id="s1">
+            <div style="font-size:3rem;margin-bottom:16px">⚡</div>
+            <h1>NR-10</h1>
+            <div class="sub">Segurança em Instalações e Serviços em Eletricidade</div>
+            <div class="sub" style="margin-top:4px">Ministério do Trabalho e Emprego — Portaria n.º 3.214/78</div>
+            <div class="badge">SENAI · Prof. Marcos José dos Santos · Unidade Cariacica</div>
+            <div style="margin-top:24px;font-size:0.85rem;opacity:0.7">10 slides · Use as setas para navegar</div>
+        </div>
+
+        <!-- SLIDE 2: O QUE É E CAMPO DE APLICAÇÃO -->
+        <div class="slide" id="s2">
+            <h2>O que é a NR-10 e seu campo de aplicação</h2>
+            <ul class="slide-list">
+                <li><span class="bullet">📌</span><div>Regulamenta as condições mínimas de <strong>segurança e saúde</strong> para quem trabalha em instalações elétricas, seja na construção, operação, manutenção ou reforma.</div></li>
+                <li><span class="bullet">🏭</span><div>Aplica-se a <strong>todas as fases</strong> de uma instalação: projeto, execução, operação, manutenção, reforma, ampliação e desmontagem.</div></li>
+                <li><span class="bullet">👷</span><div>Obrigatória para <strong>todo trabalhador</strong> que, de alguma forma, possa ser exposto a riscos elétricos — não apenas os eletricistas.</div></li>
+                <li><span class="bullet">⚖️</span><div>Complementada pela <strong>NBR 5410</strong> (instalações de baixa tensão) e pelas normas da ABNT aplicáveis a cada tipo de serviço.</div></li>
+                <li><span class="bullet">⚠️</span><div>O descumprimento sujeita o empregador a <strong>multas, embargos e interdições</strong> pelo Ministério do Trabalho.</div></li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 3: PERFIS PROFISSIONAIS -->
+        <div class="slide" id="s3">
+            <h2>Perfis Profissionais (NR-10, item 10.8)</h2>
+            <div class="slide-grid">
+                <div class="slide-card">
+                    <div class="sc-label">Nível 1</div>
+                    <div class="sc-title">Capacitado</div>
+                    <div class="sc-body">Recebeu treinamentos e orientações de profissional habilitado ou qualificado. Autorizado para tarefas específicas e limitadas. <strong>Não precisa de registro em conselho.</strong></div>
+                </div>
+                <div class="slide-card">
+                    <div class="sc-label">Nível 2</div>
+                    <div class="sc-title">Qualificado</div>
+                    <div class="sc-body">Concluiu curso técnico específico na área elétrica e possui <strong>certificado profissionalizante</strong>. Não exige registro em conselho de classe.</div>
+                </div>
+                <div class="slide-card">
+                    <div class="sc-label">Nível 3</div>
+                    <div class="sc-title">Habilitado</div>
+                    <div class="sc-body">Além do curso técnico ou graduação, possui <strong>registro no conselho de classe competente</strong> (CREA, CRT). Máxima autonomia técnica.</div>
+                </div>
+            </div>
+            <div class="slide-warn">⚠️ <strong>Prontuário de Instalações:</strong> documento que reúne todos os registros, projetos e laudos que comprovam que as instalações elétricas estão em conformidade com a NR-10. Obrigação do empregador.</div>
+        </div>
+
+        <!-- SLIDE 4: SEQUÊNCIA DE CONTROLE (5 PASSOS) -->
+        <div class="slide" id="s4">
+            <h2>Sequência de Controle antes de qualquer intervenção</h2>
+            <div class="slide-seq">
+                <div class="slide-seq-item">
+                    <div class="slide-seq-num">1</div>
+                    <div class="slide-seq-text"><strong>Desenergização</strong><span>Desligar todas as fontes de energia (chaves, disjuntores, religadores)</span></div>
+                </div>
+                <div class="slide-seq-item">
+                    <div class="slide-seq-num">2</div>
+                    <div class="slide-seq-text"><strong>Seccionamento</strong><span>Isolar fisicamente a parte do circuito onde será realizado o trabalho</span></div>
+                </div>
+                <div class="slide-seq-item">
+                    <div class="slide-seq-num">3</div>
+                    <div class="slide-seq-text"><strong>Verificar ausência de tensão</strong><span>Usar instrumento adequado para confirmar que não há tensão — NUNCA presuma</span></div>
+                </div>
+                <div class="slide-seq-item">
+                    <div class="slide-seq-num">4</div>
+                    <div class="slide-seq-text"><strong>Aterramento provisório</strong><span>Aterrar e curto-circuitar os condutores da instalação para garantir segurança</span></div>
+                </div>
+                <div class="slide-seq-item">
+                    <div class="slide-seq-num">5</div>
+                    <div class="slide-seq-text"><strong>Sinalização / Bloqueio (LOTO)</strong><span>Bloquear chaves com cadeado e sinalizar "Não ligue — homem trabalhando"</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: ZONAS DE RISCO E CONTROLADAS -->
+        <div class="slide" id="s5">
+            <h2>Zonas de Trabalho em Instalações Elétricas</h2>
+            <div class="zone-grid">
+                <div class="zone-box red">
+                    <h3>🔴 Zona de Risco (ZR)</h3>
+                    <p>Região tão próxima de partes energizadas que o contato acidental é altamente provável. Somente profissionais habilitados com EPIs adequados podem atuar.</p>
+                </div>
+                <div class="zone-box yellow">
+                    <h3>🟡 Zona Controlada (ZC)</h3>
+                    <p>Região ao redor da ZR onde o acesso é restrito e controlado. Exige profissional capacitado, qualificado ou habilitado acompanhado.</p>
+                </div>
+                <div class="zone-box blue">
+                    <h3>🔵 Zona de Vizinhança (ZV)</h3>
+                    <p>Região além da ZC. Pessoas não autorizadas podem estar presentes, mas devem ser informadas dos riscos existentes.</p>
+                </div>
+                <div class="zone-box green">
+                    <h3>🟢 Trabalho Desenergizado</h3>
+                    <p>Única condição preferencial. Seguir os 5 passos da sequência de controle antes de qualquer intervenção.</p>
+                </div>
+            </div>
+            <div class="slide-warn">⚠️ As distâncias de cada zona variam conforme o nível de tensão da instalação (BT, MT ou AT).</div>
+        </div>
+
+        <!-- SLIDE 6: TRABALHO ENERGIZADO -->
+        <div class="slide" id="s6">
+            <h2>Trabalho em Instalações Energizadas</h2>
+            <ul class="slide-list">
+                <li><span class="bullet">🚫</span><div>É <strong>exceção, não regra</strong> — só permitido quando for comprovadamente inviável a desenergização.</div></li>
+                <li><span class="bullet">📝</span><div>Exige <strong>Análise de Risco (AR)</strong> e emissão de <strong>Permissão de Trabalho (PT)</strong> antes do início da atividade.</div></li>
+                <li><span class="bullet">👥</span><div>Deve ser realizado por profissional <strong>habilitado</strong>, com supervisão e na presença de, no mínimo, mais um trabalhador capacitado.</div></li>
+                <li><span class="bullet">🧤</span><div>Uso obrigatório de EPIs específicos para riscos elétricos: luvas dielétricas, capacete com jugular, óculos, uniforme anti-chama.</div></li>
+                <li><span class="bullet">🔧</span><div>Ferramentas devem ser <strong>isoladas/dielétricas</strong>, inspecionadas antes do uso e dentro da validade de teste.</div></li>
+            </ul>
+        </div>
+
+        <!-- SLIDE 7: EPIs PARA TRABALHO ELÉTRICO -->
+        <div class="slide" id="s7">
+            <h2>EPIs Obrigatórios para Trabalho Elétrico (NR-06 + NR-10)</h2>
+            <div class="slide-two-col">
+                <div class="col-box">
+                    <h3>🧤 Proteção das mãos e braços</h3>
+                    <ul>
+                        <li>Luvas dielétricas (com manga protetora)</li>
+                        <li>Classificadas por classe de tensão (0 a 4)</li>
+                        <li>Inspeção antes de cada uso (soprar e verificar furos)</li>
+                    </ul>
+                </div>
+                <div class="col-box">
+                    <h3>⛑️ Proteção da cabeça e rosto</h3>
+                    <ul>
+                        <li>Capacete classe B (isolante até 20.000 V)</li>
+                        <li>Com jugular e proteção facial quando necessário</li>
+                        <li>Óculos de proteção contra arco elétrico</li>
+                    </ul>
+                </div>
+                <div class="col-box">
+                    <h3>👟 Proteção dos pés</h3>
+                    <ul>
+                        <li>Calçado de segurança com solado dielétrico</li>
+                        <li>Sem partes metálicas expostas</li>
+                    </ul>
+                </div>
+                <div class="col-box">
+                    <h3>👕 Proteção do corpo</h3>
+                    <ul>
+                        <li>Uniforme anti-chama (tecido com propriedade FR)</li>
+                        <li>Proibido usar roupas sintéticas (derretem e grudam)</li>
+                        <li>Macacão de algodão ou tecido tratado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: NBR 5410 e NR-10 -->
+        <div class="slide" id="s8">
+            <h2>NBR 5410 e sua relação com a NR-10</h2>
+            <table class="nbr-table">
+                <thead>
+                    <tr><th>Norma</th><th>Tipo</th><th>O que regula</th><th>Abordado nas aulas?</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>NR-10</strong></td><td>Trabalhista</td><td>Segurança de quem trabalha com eletricidade (pessoas)</td><td>✅ Sim</td></tr>
+                    <tr><td><strong>NBR 5410</strong></td><td>ABNT</td><td>Projeto e execução de instalações elétricas de <em>baixa tensão</em></td><td>✅ Sim</td></tr>
+                    <tr><td><strong>NBR 14039</strong></td><td>ABNT</td><td>Instalações elétricas de <em>média tensão</em></td><td>❌ Não abordada</td></tr>
+                    <tr><td><strong>NBR 5419</strong></td><td>ABNT</td><td>SPDA — proteção contra descargas atmosféricas (para-raios)</td><td>❌ Não abordada</td></tr>
+                    <tr><td><strong>NBR 6493</strong></td><td>ABNT</td><td>Cores para identificação de condutores elétricos</td><td>❌ Não abordada</td></tr>
+                    <tr><td><strong>NBR IEC 60900</strong></td><td>ABNT</td><td>Ferramentas manuais isoladas para trabalho em instalações energizadas</td><td>❌ Não abordada</td></tr>
+                </tbody>
+            </table>
+            <div class="slide-warn" style="margin-top:14px">📌 <strong>Conclusão:</strong> Os seus materiais cobriram bem a <strong>NBR 5410</strong>. As demais NBRs são complementares e geralmente abordadas em cursos de especialização em eletricidade.</div>
+        </div>
+
+        <!-- SLIDE 9: RESPONSABILIDADES -->
+        <div class="slide" id="s9">
+            <h2>Responsabilidades e Penalidades</h2>
+            <div class="slide-two-col">
+                <div class="col-box">
+                    <h3>🏢 Empregador deve:</h3>
+                    <ul>
+                        <li>Garantir instalações seguras e conformes</li>
+                        <li>Manter Prontuário atualizado</li>
+                        <li>Fornecer EPIs gratuitamente</li>
+                        <li>Promover treinamentos periódicos (NR-10 a cada 2 anos)</li>
+                        <li>Emitir Análise de Risco e Permissão de Trabalho</li>
+                        <li>Garantir profissional habilitado supervisando</li>
+                    </ul>
+                </div>
+                <div class="col-box">
+                    <h3>👷 Trabalhador deve:</h3>
+                    <ul>
+                        <li>Seguir a sequência de controle (5 passos)</li>
+                        <li>Usar os EPIs fornecidos corretamente</li>
+                        <li>NUNCA presumir que está desenergizado</li>
+                        <li>Comunicar condições inseguras</li>
+                        <li>Participar dos treinamentos</li>
+                        <li>Exercer o Direito de Recusa se houver risco grave</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-warn">⚠️ <strong>Penalidades ao empregador:</strong> multas (NR-28), embargo da obra, interdição do estabelecimento, ações cíveis e trabalhistas por danos à saúde do trabalhador.</div>
+        </div>
+
+        <!-- SLIDE 10: RESUMO -->
+        <div class="slide" id="s10">
+            <h2>Resumo — Pontos Essenciais da NR-10</h2>
+            <ul class="slide-list">
+                <li><span class="bullet">✅</span><div><strong>Aplica-se a todos</strong> que possam se expor a riscos elétricos — não só eletricistas.</div></li>
+                <li><span class="bullet">✅</span><div><strong>3 perfis:</strong> Capacitado (treinado) → Qualificado (certificado) → Habilitado (registro em conselho).</div></li>
+                <li><span class="bullet">✅</span><div><strong>5 passos</strong> antes de qualquer intervenção: Desenergizar → Seccionar → Verificar tensão → Aterrar → Sinalizar.</div></li>
+                <li><span class="bullet">✅</span><div><strong>NUNCA</strong> presuma que está desenergizado sem testar com instrumento adequado.</div></li>
+                <li><span class="bullet">✅</span><div>Trabalho energizado é <strong>exceção</strong> — exige AR, PT, habilitado e EPIs dielétricos.</div></li>
+                <li><span class="bullet">✅</span><div><strong>NBR 5410</strong> complementa a NR-10 para instalações de baixa tensão (abordada nas aulas).</div></li>
+                <li><span class="bullet">✅</span><div>Reciclagem obrigatória a <strong>cada 2 anos</strong> ou quando houver mudança de risco.</div></li>
+            </ul>
+        </div>
+
+    </div><!-- /slides-wrap -->
+
+    <!-- VÍDEO MP4 GERADO -->
+    <div class="video-desc" style="margin-top:24px">
+        <h3>🎬 Aula em vídeo com narração</h3>
+        <div class="video-wrap" style="margin-top:12px">
+            <video controls>
+                <source src="videos_gerados/02_Normas_Regulamentadoras.mp4" type="video/mp4">
+                Seu navegador não suporta vídeo HTML5.
+            </video>
+        </div>
+    </div>
+
+    <!-- NAVEGAÇÃO -->
+    <div class="slide-nav">
+        <button class="snav-btn" id="s-prev" onclick="slideNav(-1)" disabled>← Anterior</button>
+        <div style="text-align:center">
+            <div class="slide-dots" id="s-dots"></div>
+            <div class="slide-counter" id="s-counter" style="margin-top:6px">Slide 1 / 10</div>
+        </div>
+        <button class="snav-btn" id="s-next" onclick="slideNav(1)">Próximo →</button>
+    </div>
+</div>
+
 <!-- ==================== QUIZ ==================== -->
 <div id="page-quiz" class="page">
     <div class="page-header">
@@ -210,10 +508,46 @@
 <script>
 function show(id) {
     document.getElementById('page-menu').style.display = id === 'page-menu' ? 'flex' : 'none';
-    ['page-nr','page-aterramento','page-socorros','page-quiz'].forEach(p => {
+    ['page-nr','page-aterramento','page-socorros','page-nr10','page-quiz'].forEach(p => {
         document.getElementById(p).classList.toggle('active', p === id);
     });
     if (id === 'page-quiz') initQuiz();
+    if (id === 'page-nr10') initSlides();
+}
+
+// ===== SLIDESHOW NR-10 =====
+const TOTAL_SLIDES = 10;
+let sCur = 1;
+
+function initSlides() {
+    sCur = 1;
+    renderSlide();
+    const dots = document.getElementById('s-dots');
+    dots.innerHTML = '';
+    for (let i = 1; i <= TOTAL_SLIDES; i++) {
+        const d = document.createElement('div');
+        d.className = 'slide-dot' + (i === 1 ? ' on' : '');
+        d.onclick = () => { sCur = i; renderSlide(); };
+        dots.appendChild(d);
+    }
+}
+
+function renderSlide() {
+    for (let i = 1; i <= TOTAL_SLIDES; i++) {
+        document.getElementById('s' + i).classList.toggle('active', i === sCur);
+    }
+    document.querySelectorAll('.slide-dot').forEach((d, i) => {
+        d.classList.toggle('on', i + 1 === sCur);
+    });
+    document.getElementById('s-counter').textContent = `Slide ${sCur} / ${TOTAL_SLIDES}`;
+    document.getElementById('s-prev').disabled = sCur === 1;
+    document.getElementById('s-next').disabled = sCur === TOTAL_SLIDES;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function slideNav(dir) {
+    sCur = Math.max(1, Math.min(TOTAL_SLIDES, sCur + dir));
+    renderSlide();
 }
 
 // ===== BANCO DE QUESTÕES (100 únicas) =====
