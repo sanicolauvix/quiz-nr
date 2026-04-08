@@ -139,7 +139,7 @@
         <div class="menu-card" onclick="show('page-nr')">
             <div class="icon">📋</div>
             <h2>Normas Regulamentadoras</h2>
-            <p>NR-01, NR-05, NR-06, NR-10, NR-15, NR-16, NR-17 e mais</p>
+            <p>NR-01, NR-05, NR-06, NR-15, NR-16, NR-17 e mais</p>
         </div>
         <div class="menu-card" onclick="show('page-aterramento')">
             <div class="icon">⚡</div>
@@ -156,10 +156,15 @@
             <h2>NR-10 — Apresentação</h2>
             <p>Segurança elétrica: perfis, zonas de risco, EPIs, sequência de controle e NBR 5410</p>
         </div>
+        <div class="menu-card" onclick="show('page-extintores')">
+            <div class="icon">🧯</div>
+            <h2>Extintores de Incêndio</h2>
+            <p>Classes de fogo · Tipos de extintores · Técnica PASS · NR-23</p>
+        </div>
         <div class="menu-card" onclick="show('page-quiz')">
             <div class="icon">🏆</div>
-            <h2>Simulado (100 questões)</h2>
-            <p>Baseado nas aulas de NRs, aterramento e primeiros socorros</p>
+            <h2>Simulado (180 questões)</h2>
+            <p>NRs, aterramento, primeiros socorros, NR-10, extintores e NBR</p>
         </div>
     </div>
 </div>
@@ -467,7 +472,7 @@
         <h3>🎬 Aula em vídeo com narração</h3>
         <div class="video-wrap" style="margin-top:12px">
             <video controls>
-                <source src="videos_gerados/02_Normas_Regulamentadoras.mp4" type="video/mp4">
+                <source src="videos_gerados/04_NR10.mp4" type="video/mp4">
                 Seu navegador não suporta vídeo HTML5.
             </video>
         </div>
@@ -484,11 +489,37 @@
     </div>
 </div>
 
+<!-- ==================== EXTINTORES ==================== -->
+<div id="page-extintores" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="show('page-menu')">← Voltar</button>
+        <span class="page-title">Extintores de Incêndio</span>
+    </div>
+    <div class="video-wrap">
+        <video controls>
+            <source src="videos_gerados/05_Extintores.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo HTML5.
+        </video>
+    </div>
+    <div class="video-desc">
+        <h3>Tópicos abordados:</h3>
+        <ul>
+            <li><strong>Triângulo do Fogo</strong> – combustível, comburente e calor: remova um e extingue o fogo</li>
+            <li><strong>Classes de Incêndio</strong> – A (sólidos) · B (líquidos/gases) · C (elétrico) · D (metais)</li>
+            <li><strong>Tipos de extintores</strong> – água, pó BC, pó ABC, CO₂ e espuma mecânica</li>
+            <li><strong>Seleção correta</strong> – NUNCA use água em incêndios classe B ou C</li>
+            <li><strong>Técnica PASS</strong> – Puxar pino · Apontar para a base · Apertar gatilho · Varrer</li>
+            <li><strong>Manutenção</strong> – inspeção mensal, manutenção anual (INMETRO) e teste hidrostático a cada 5 anos</li>
+            <li><strong>NR-23</strong> – distâncias, sinalização, brigada e simulados obrigatórios</li>
+        </ul>
+    </div>
+</div>
+
 <!-- ==================== QUIZ ==================== -->
 <div id="page-quiz" class="page">
     <div class="page-header">
         <button class="back-btn" onclick="show('page-menu')">← Voltar</button>
-        <span class="page-title">Simulado — 100 Questões</span>
+        <span class="page-title">Simulado — 180 Questões</span>
     </div>
     <div class="quiz-wrap">
         <div class="quiz-top">
@@ -508,7 +539,7 @@
 <script>
 function show(id) {
     document.getElementById('page-menu').style.display = id === 'page-menu' ? 'flex' : 'none';
-    ['page-nr','page-aterramento','page-socorros','page-nr10','page-quiz'].forEach(p => {
+    ['page-nr','page-aterramento','page-socorros','page-nr10','page-extintores','page-quiz'].forEach(p => {
         document.getElementById(p).classList.toggle('active', p === id);
     });
     if (id === 'page-quiz') initQuiz();
@@ -550,7 +581,7 @@ function slideNav(dir) {
     renderSlide();
 }
 
-// ===== BANCO DE QUESTÕES (100 únicas) =====
+// ===== BANCO DE QUESTÕES (180 únicas) =====
 const BANCO = [
     // ATERRAMENTO ELÉTRICO (1-25)
     {p:"O que é aterramento elétrico?", o:["Ligação de fios sem isolamento","Conexão intencional de partes metálicas ao solo para dissipação de correntes de fuga","Instalação de disjuntores","Conexão do neutro ao quadro"], r:1, e:"O aterramento cria caminho seguro para correntes de fuga, protegendo pessoas e equipamentos."},
@@ -658,7 +689,93 @@ const BANCO = [
     {p:"O extintor de pó ABC combate quais classes de fogo?", o:["Apenas A","B e C","A, B e C","D e K"], r:2, e:"O pó ABC é o mais versátil, indicado para as três classes mais comuns."},
     {p:"Qual a validade de um extintor de incêndio (recarga)?", o:["1 ano","Cada 5 anos","Depende do tipo — geralmente anual ou conforme inspeção","Não tem validade"], r:2, e:"A inspeção visual é mensal; a recarga e teste hidrostático seguem normas específicas por tipo."},
     {p:"O que é o PPCI?", o:["Programa de Primeiros Cuidados Internos","Plano de Prevenção e Proteção Contra Incêndios — exigido pelas normas de segurança","Protocolo de Pressão Contínua de Incêndio","Padrão de Proteção Civil Integrado"], r:1, e:"O PPCI é exigido pelos bombeiros e pela NR para edificações acima de determinado risco."},
-    {p:"O método de ISOLAMENTO combate o fogo ao:", o:["Resfriar com água","Cortar o suprimento de combustível (fechar válvula de gás, afastar materiais)","Usar extintor de CO2","Chamar os bombeiros"], r:1, e:"Remover ou isolar o combustível priva o fogo de seu 'alimento'."}
+    {p:"O método de ISOLAMENTO combate o fogo ao:", o:["Resfriar com água","Cortar o suprimento de combustível (fechar válvula de gás, afastar materiais)","Usar extintor de CO2","Chamar os bombeiros"], r:1, e:"Remover ou isolar o combustível priva o fogo de seu 'alimento'."},
+
+    // NR-10 ESPECÍFICO (101-125)
+    {p:"Qual a principal diferença entre trabalho energizado e trabalho desenergizado na NR-10?", o:["Não há diferença","Energizado é realizado com tensão presente; desenergizado após os 5 passos de controle","Energizado é mais seguro","Desenergizado usa mais EPIs"], r:1, e:"O trabalho desenergizado é sempre preferencial. O energizado é exceção que exige AR, PT e habilitado."},
+    {p:"O que deve constar no Prontuário de Instalações Elétricas (NR-10)?", o:["Apenas folha de ponto","Projetos, memoriais, diagramas, laudos, relatórios e ART das instalações elétricas","Somente o CNPJ da empresa","Lista de funcionários"], r:1, e:"O Prontuário comprova conformidade das instalações com a NR-10 e deve ser mantido atualizado."},
+    {p:"O que é a Permissão de Trabalho (PT) na NR-10?", o:["Carteira de trabalho do eletricista","Documento formal que autoriza serviço em instalação elétrica registrando riscos e controles","Licença municipal","Habilitação para veículos elétricos"], r:1, e:"A PT é emitida antes de cada serviço em instalação energizada e formaliza os controles adotados."},
+    {p:"O capacete classe B usado em trabalho elétrico protege até qual tensão?", o:["1.000 V","5.000 V","20.000 V","100.000 V"], r:2, e:"Capacete classe B isola até 20.000 volts, adequado para trabalho em instalações elétricas."},
+    {p:"Como inspecionar luvas dielétricas antes do uso?", o:["Verificar apenas a cor","Enrolar do punho à ponta verificando se murcha (indica furo)","Mergulhar em água","Verificar apenas o prazo impresso"], r:1, e:"O teste de pressão de ar detecta furos invisíveis que comprometeriam a proteção dielétrica."},
+    {p:"O que significa LOTO no contexto da NR-10?", o:["Lotação Operacional","Lockout/Tagout — bloqueio com cadeado e etiqueta de sinalização","Lâmpada Operacional de Trabalho","Ligação Oficial de Tensão"], r:1, e:"LOTO impede reenergização acidental enquanto alguém trabalha no circuito."},
+    {p:"Qual a ordem CORRETA da sequência de controle da NR-10?", o:["Aterrar → Desenergizar → Verificar → Sinalizar → Seccionar","Desenergizar → Seccionar → Verificar ausência de tensão → Aterrar → Sinalizar","Sinalizar → Aterrar → Desenergizar → Verificar → Seccionar","Verificar → Seccionar → Desenergizar → Aterrar → Sinalizar"], r:1, e:"A sequência exata: Desenergizar, Seccionar, Verificar ausência de tensão, Aterrar provisoriamente, Sinalizar."},
+    {p:"Por que roupas sintéticas são proibidas em trabalho elétrico?", o:["São caras","Derretem e grudam na pele em caso de arco elétrico, agravando as lesões","Não conduzem eletricidade","Norma estética"], r:1, e:"Poliéster e similares fundem-se à pele nas temperaturas do arco elétrico, causando queimaduras graves."},
+    {p:"O que é o aterramento provisório na sequência de controle da NR-10?", o:["Aterramento permanente da instalação","Conexão temporária ao terra para dissipar cargas residuais antes de tocar nos condutores","Instalar uma haste nova","Ligar o quadro ao solo"], r:1, e:"O aterramento provisório garante que tensões residuais sejam eliminadas antes do toque nos condutores."},
+    {p:"Quem pode realizar trabalho em instalação elétrica ENERGIZADA?", o:["Qualquer funcionário treinado","Apenas profissional habilitado, acompanhado de ao menos um capacitado","Qualquer capacitado","Estagiários com supervisão"], r:1, e:"Trabalho energizado exige habilitado (com registro em conselho) e ao menos mais um capacitado presente."},
+    {p:"O calçado adequado para trabalho elétrico deve ter:", o:["Biqueira de aço","Solado dielétrico e ausência de partes metálicas expostas","Salto alto para isolamento","Material plástico na parte superior"], r:1, e:"O calçado dielétrico isola o trabalhador do solo, prevenindo choques por tensão de passo."},
+    {p:"Qual instrumento verifica ausência de tensão antes de tocar em um condutor?", o:["Multímetro ou detector de tensão calibrado adequado à instalação","Chave de fenda","Alicates","Somente os EPIs bastam"], r:0, e:"A verificação com instrumento calibrado é obrigatória — nunca presuma que está desenergizado."},
+    {p:"O que diferencia o trabalhador QUALIFICADO do CAPACITADO na NR-10?", o:["Nenhuma diferença","Qualificado tem certificado profissionalizante; capacitado apenas recebeu treinamentos internos específicos","O capacitado tem CREA","O qualificado é mais antigo"], r:1, e:"Qualificado = certificado profissionalizante. Capacitado = treinado por habilitado/qualificado para tarefas pontuais."},
+    {p:"Ferramentas dielétricas usadas em trabalho elétrico devem:", o:["Ser de qualquer material","Ser isoladas, classificadas por tensão, inspecionadas antes do uso e dentro da validade","Ser apenas de madeira","Não precisar de inspeção"], r:1, e:"Ferramentas dielétricas têm cabo isolante e são certificadas por classe de tensão máxima de trabalho."},
+    {p:"O que é a Zona de Risco (ZR) conforme a NR-10?", o:["Zona onde o risco é zero","Região tão próxima de partes energizadas que o contato acidental é muito provável","Área de descanso","Local dos EPIs"], r:1, e:"Na ZR, apenas profissionais habilitados com EPIs específicos podem atuar."},
+    {p:"A Zona Controlada (ZC) na NR-10 é:", o:["Zona sem riscos","Região ao redor da ZR com acesso restrito — exige capacitado ou superior","Área pública","Local do quadro elétrico"], r:1, e:"A ZC permite acesso apenas a pessoal autorizado e consciente dos riscos envolvidos."},
+    {p:"A Zona de Vizinhança (ZV) na NR-10 é:", o:["A mais perigosa","Região além da ZC onde pessoas não autorizadas podem estar, desde que informadas","Exclusiva para engenheiros","Área de trabalho principal"], r:1, e:"Na ZV, pessoas não autorizadas podem transitar, mas devem ser informadas sobre os riscos."},
+    {p:"O Direito de Recusa na NR-10 permite ao trabalhador:", o:["Recusar qualquer tarefa","Recusar tarefa que represente risco grave e iminente sem sofrer penalidades","Recusar uso de EPIs","Recusar treinamentos"], r:1, e:"A recusa deve ser comunicada formalmente ao superior — o trabalhador não pode ser penalizado por isso."},
+    {p:"A obrigação do empregador em relação ao treinamento NR-10 é:", o:["Apenas recomendar","Garantir, custear e ceder horário para o treinamento de todos os expostos a riscos elétricos","O empregado custeia","Treinamento é opcional"], r:1, e:"Cabe ao empregador garantir, custear e viabilizar horário para o treinamento NR-10."},
+    {p:"O óculos de proteção contra arco elétrico deve ser usado quando:", o:["Apenas na chuva","Sempre que houver risco de projeção de partículas ou arco elétrico","Apenas em alta tensão","Não é exigido pela NR-10"], r:1, e:"O arco elétrico emite luz intensa e projeta partículas incandescentes — os óculos protegem os olhos."},
+    {p:"Qual a validade típica do teste dielétrico das luvas para trabalho elétrico?", o:["10 anos","5 anos","Varia conforme a classe (geralmente 6 meses a 1 ano)","Não há validade"], r:2, e:"Luvas dielétricas têm prazo de validade de teste — após vencido, não oferecem proteção garantida."},
+    {p:"Em que situação o trabalho em instalação energizada é PERMITIDO pela NR-10?", o:["Sempre que o eletricista quiser","Apenas quando a desenergização for comprovadamente inviável ou oferecer maior risco","Quando o gerente autorizar","Somente em alta tensão"], r:1, e:"Trabalho energizado é exceção e exige justificativa técnica, AR, PT e habilitado responsável."},
+    {p:"O que é seccionamento na sequência de controle da NR-10?", o:["Desligar o disjuntor principal","Isolar fisicamente o trecho do circuito onde será realizado o trabalho","Medir a tensão","Aterrar o equipamento"], r:1, e:"Seccionar garante que o trecho de trabalho fique fisicamente separado de outras partes energizadas."},
+    {p:"A Análise de Risco (AR) em trabalho elétrico energizado deve ser elaborada por:", o:["Qualquer funcionário","Profissional habilitado ou qualificado com conhecimento da instalação","O gerente administrativo","O segurança sem formação elétrica"], r:1, e:"A AR exige conhecimento técnico específico da instalação e dos riscos envolvidos em cada tarefa."},
+    {p:"Quem pode assinar laudos e projetos elétricos conforme a NR-10?", o:["Capacitado","Qualificado","Habilitado (com registro no CREA ou CRT)","Qualquer trabalhador experiente"], r:2, e:"Somente o habilitado tem registro em conselho de classe, condição necessária para assinar documentos técnicos."},
+
+    // EXTINTORES AMPLIADO (126-150)
+    {p:"Qual é o passo 'P' da técnica PASS para uso de extintor?", o:["Pressionar o gatilho","Puxar o pino de segurança (lacre)","Posicionar-se atrás do extintor","Proteger o rosto"], r:1, e:"O pino de segurança impede acionamento acidental — deve ser removido antes de usar o extintor."},
+    {p:"Para onde deve ser apontado o bico do extintor ao combater o fogo?", o:["Para o topo das chamas","Para a fumaça","Para a BASE das chamas","Para a parede mais próxima"], r:2, e:"O fogo começa na base — apontar para o topo dispersa o agente sem extinguir o foco real."},
+    {p:"Após usar parcialmente um extintor, o que deve ser feito?", o:["Guardá-lo normalmente","Recarregá-lo imediatamente — extintor parcialmente usado é considerado inoperante","Usá-lo até esvaziar","Doá-lo"], r:1, e:"A recarga imediata garante que o extintor esteja sempre pronto para uso em nova emergência."},
+    {p:"Qual a altura máxima da parte INFERIOR do extintor em relação ao piso?", o:["0,5 m","1,0 m","1,6 m","2,0 m"], r:2, e:"Parte inferior a no máximo 1,60 m do piso facilita acesso rápido sem esforço excessivo."},
+    {p:"Qual a distância máxima a percorrer para extintor com risco de fogo Classe A?", o:["5 m","10 m","15 m","25 m"], r:2, e:"Para Classe A a distância máxima é 15 metros conforme a NBR 12693."},
+    {p:"Qual a distância máxima para extintor com risco de fogo Classe B ou C?", o:["5 m","10 m","15 m","20 m"], r:1, e:"Para Classes B e C a distância máxima é 10 metros, dada a maior velocidade de propagação."},
+    {p:"O que verificar na inspeção visual MENSAL do extintor?", o:["Apenas o peso","Lacre intacto, manômetro na zona verde, ausência de danos e acesso desobstruído","Somente a data de validade","Apenas a cor"], r:1, e:"A inspeção mensal é responsabilidade do empregador e pode ser realizada por funcionário treinado."},
+    {p:"O teste hidrostático do cilindro do extintor deve ser feito a cada:", o:["1 ano","2 anos","5 anos","10 anos"], r:2, e:"O teste hidrostático avalia a integridade estrutural do cilindro e é obrigatório a cada 5 anos."},
+    {p:"O agente extintor CO2 combate o fogo principalmente por:", o:["Resfriamento","Abafamento — desloca o oxigênio ao redor do fogo","Isolamento do combustível","Reação química direta"], r:1, e:"O CO2 desloca o oxigênio, sufocando o fogo sem deixar resíduo nos equipamentos."},
+    {p:"Por que a espuma mecânica NÃO deve ser usada em fogo Classe C (elétrico)?", o:["É cara","A espuma contém água e conduz eletricidade, podendo causar choque no operador","Não extingue esse tipo","Pode explodir"], r:1, e:"Espuma tem água na composição — em fogo elétrico use CO2 ou pó seco dielétrico."},
+    {p:"Qual a cor do manômetro que indica extintor operacional (pressurizado corretamente)?", o:["Zona vermelha","Zona amarela","Zona verde","Zona azul"], r:2, e:"Zona verde = pressão adequada. Zona vermelha = sub ou sobrepressão — extintor inoperante."},
+    {p:"O que NÃO deve ser feito ao usar um extintor?", o:["Usar a técnica PASS","Posicionar-se com o vento nas costas","Apontar para o TOPO das chamas","Manter rota de fuga livre"], r:2, e:"Apontar para o topo é ineficaz — o agente deve atingir a base onde está o combustível."},
+    {p:"Qual extintor é indicado para servidores e equipamentos de TI?", o:["Água","Pó ABC","CO2 — não deixa resíduo e não conduz eletricidade","Espuma"], r:2, e:"CO2 é ideal para TI: não conduz eletricidade e não danifica equipamentos com resíduos de pó."},
+    {p:"O fogo de Classe K envolve:", o:["Madeira","Metais combustíveis","Óleos e gorduras de cozinha em alta temperatura","Gases industriais"], r:2, e:"Classe K é específica para cozinhas profissionais — use extintor de pó úmido específico, NUNCA água."},
+    {p:"Qual o principal risco de usar água para combater fogo em óleo quente de cozinha?", o:["A água não extingue","A água vaporiza violentamente projetando óleo incandescente (explosão de vapor)","O óleo apaga a água","Não há risco"], r:1, e:"A diferença de temperatura provoca vaporização explosiva — o óleo é projetado em bolas de fogo."},
+    {p:"O método de ABAFAMENTO combate o fogo removendo qual elemento?", o:["O combustível","O calor","O comburente (oxigênio)","A reação em cadeia"], r:2, e:"Jogar areia, usar CO2 ou tampar o recipiente reduz o oxigênio disponível, sufocando o fogo."},
+    {p:"O que é a brigada de incêndio exigida pela NR-23?", o:["Corpo de bombeiros privado","Grupo de trabalhadores treinados para combate inicial a incêndios e evacuação","Empresa terceirizada","Equipe de primeiros socorros apenas"], r:1, e:"A brigada é formada por funcionários da própria empresa, treinados para resposta imediata a emergências."},
+    {p:"O extintor de pó BC NÃO é adequado para Classe A porque:", o:["É muito caro","Não resfria brasas residuais, que podem reignitar o material sólido","Conduz eletricidade","Não aprovado pelo INMETRO"], r:1, e:"Materiais da Classe A formam brasas que o pó BC não resfria, podendo causar reacendimento."},
+    {p:"O Plano de Prevenção e Proteção Contra Incêndios (PPCI) é aprovado por:", o:["Ministério do Trabalho","Corpo de Bombeiros Militar do Estado","INMETRO","ANVISA"], r:1, e:"O Corpo de Bombeiros analisa e aprova o PPCI das edificações conforme legislação estadual."},
+    {p:"Qual a frequência mínima de treinamento dos membros da brigada de incêndio?", o:["A cada 5 anos","A cada 3 anos","Anual, com simulado prático","Apenas na contratação"], r:2, e:"O treinamento da brigada deve ser anual e incluir simulados práticos conforme a NR-23."},
+    {p:"A distância segura de operação de um extintor em relação às chamas é:", o:["0,5 m","Entre 1,5 m e 3 m (conforme o rótulo)","5 m","10 m"], r:1, e:"A distância correta garante eficácia do agente sem expor o operador ao calor excessivo das chamas."},
+    {p:"O pó ABC tem vantagem sobre o pó BC na Classe A porque:", o:["É mais barato","Contém monofosfato de amônio que combate brasas residuais além de interromper a reação em cadeia","Tem maior alcance","Não há vantagem"], r:1, e:"O monofosfato de amônio do pó ABC age sobre brasas da Classe A, evitando reacendimento."},
+    {p:"Qual informação OBRIGATÓRIA deve constar no rótulo de todo extintor?", o:["Nome do fabricante apenas","Classes de fogo adequadas, instruções de uso e data de fabricação","Preço","Nome da empresa"], r:1, e:"O rótulo normalizado pelo INMETRO garante que o operador identifique e use o extintor corretamente."},
+    {p:"Qual NR trata especificamente de proteção contra incêndios no ambiente de trabalho?", o:["NR-10","NR-15","NR-23","NR-06"], r:2, e:"A NR-23 define saídas de emergência, tipos de extintores, brigadas e simulados obrigatórios."},
+    {p:"Qual órgão credencia empresas de manutenção e recarga de extintores no Brasil?", o:["ABNT","Corpo de Bombeiros","INMETRO","MTE"], r:2, e:"O INMETRO credencia as empresas que realizam manutenção, recarga e teste hidrostático de extintores."},
+
+    // NBR — NORMAS TÉCNICAS ABNT (151-180)
+    {p:"O que é a ABNT?", o:["Agência Brasileira de Normalização Técnica","Associação Brasileira de Normas Técnicas — elabora normas técnicas voluntárias nacionais","Autoridade Brasileira de Normas Trabalhistas","Associação de Novas Tecnologias"], r:1, e:"A ABNT é o fórum nacional de normalização. As normas NBR são elaboradas por comitês técnicos voluntários."},
+    {p:"Qual a diferença fundamental entre NR e NBR?", o:["São idênticas","NR é norma trabalhista obrigatória por lei (MTE); NBR é norma técnica da ABNT, voluntária mas obrigatória quando referenciada em lei","NR é mais antiga","NBR é internacional"], r:1, e:"NRs têm força de lei. NBRs tornam-se obrigatórias quando referenciadas por NRs ou legislação específica."},
+    {p:"O que regula a NBR 5410?", o:["Proteção contra raios","Instalações elétricas de baixa tensão em edificações","Instalações de média tensão","Quadros industriais"], r:1, e:"A NBR 5410 é a principal norma para projetos e execução de instalações elétricas de baixa tensão."},
+    {p:"Qual a tensão limite para instalações de baixa tensão (BT) conforme a NBR 5410?", o:["Até 110 V","Até 220 V","Até 1.000 V em corrente alternada","Até 440 V"], r:2, e:"Baixa tensão: até 1.000 V em CA ou 1.500 V em CC. Acima disso, aplica-se a NBR 14039."},
+    {p:"O que regulamenta a NBR 14039?", o:["Baixa tensão residencial","Instalações elétricas de média tensão (acima de 1 kV até 36,2 kV)","Iluminação de emergência","Para-raios"], r:1, e:"A NBR 14039 complementa a NBR 5410 para tensões acima de 1.000 V até 36,2 kV."},
+    {p:"A NBR 5419 trata de:", o:["Instalações de BT","Sistema de Proteção Contra Descargas Atmosféricas (SPDA — para-raios)","Tomadas e plugues","Cabos elétricos"], r:1, e:"A NBR 5419 define como projetar, instalar e manter sistemas de proteção contra raios."},
+    {p:"O que define a NBR 14136?", o:["Sistemas de aterramento","Padrão nacional de tomadas e plugues elétricos (pinos redondos — padrão brasileiro)","Cabos elétricos","Quadros de distribuição"], r:1, e:"A NBR 14136 estabeleceu o padrão nacional de tomadas em 2011, substituindo os padrões antigos."},
+    {p:"O que é a NBR 6493?", o:["Norma de aterramento","Cores para identificação de condutores elétricos","Teste de equipamentos","Instalações industriais"], r:1, e:"A NBR 6493 padroniza as cores dos fios: verde-amarelo = PE, azul = neutro, outras = fase."},
+    {p:"Qual a cor do condutor neutro conforme a NBR 5410?", o:["Verde","Vermelho","Azul claro","Preto"], r:2, e:"O condutor neutro deve ser identificado pela cor azul claro conforme as normas brasileiras."},
+    {p:"Qual a cor exclusiva do condutor de proteção (PE — terra) conforme a NBR 5410?", o:["Azul","Vermelho","Verde-amarelo (bicolor)","Branco"], r:2, e:"Verde-amarelo é exclusivo do PE — nunca deve ser usado para fases ou neutro."},
+    {p:"O que é o Dispositivo Diferencial Residual (DR)?", o:["Disjuntor termomagnético","Dispositivo que detecta corrente de fuga e desliga o circuito, protegendo contra choques elétricos","Medidor de resistência","Chave seccionadora"], r:1, e:"O DR protege pessoas ao detectar correntes de fuga de 30 mA ou menos, atuando em milissegundos."},
+    {p:"Qual a corrente de fuga que aciona o DR residencial de alta sensibilidade?", o:["100 mA","50 mA","30 mA","500 mA"], r:2, e:"30 mA é o limite de alta sensibilidade — correntes maiores podem causar fibrilação ventricular."},
+    {p:"O que é o DPS (Dispositivo de Proteção contra Surtos)?", o:["Disjuntor de proteção superior","Equipamento que protege a instalação contra sobretensões transitórias (raios, manobras)","Detector de perdas de energia","Sistema de proteção de solo"], r:1, e:"O DPS absorve surtos de tensão antes que danejem equipamentos ou causem incêndios na instalação."},
+    {p:"Qual a seção mínima recomendada pela NBR 5410 para condutores de fase em circuitos de tomadas residenciais?", o:["0,5 mm²","1,0 mm²","2,5 mm²","6,0 mm²"], r:2, e:"Circuitos de tomadas exigem mínimo 2,5 mm² de cobre para conduzir corrente sem superaquecimento."},
+    {p:"O que é circuito terminal conforme a NBR 5410?", o:["Circuito que liga o medidor ao quadro","Circuito que alimenta diretamente os pontos de utilização (tomadas, luminárias, equipamentos)","Circuito entre quadros","Circuito de emergência"], r:1, e:"Circuito terminal conecta o quadro de distribuição diretamente às cargas — tomadas, lâmpadas etc."},
+    {p:"Para que serve o disjuntor termomagnético?", o:["Medir tensão","Proteger o circuito contra sobrecarga (térmico) e curto-circuito (magnético)","Medir corrente","Ligar remotamente"], r:1, e:"O disjuntor combina proteção bimetálica (sobrecarga) e bobina magnética (curto-circuito)."},
+    {p:"O que é a NBR 12693?", o:["Norma de instalações elétricas","Sistemas de proteção por extintores — quantidade, tipo e distribuição em edificações","Norma de primeiros socorros","Para-raios"], r:1, e:"A NBR 12693 define como selecionar e posicionar extintores conforme o risco da edificação."},
+    {p:"O que é a NBR 9077?", o:["Norma de aterramento","Saídas de emergência — dimensionamento, sinalização e rotas de fuga em edificações","Cabos de BT","Instalações hospitalares"], r:1, e:"A NBR 9077 é fundamental para o PPCI: trata de rotas de fuga, corredores e escadas de emergência."},
+    {p:"A frequência da rede elétrica no Brasil é de:", o:["50 Hz","60 Hz","110 Hz","220 Hz"], r:1, e:"O Brasil opera em 60 Hz, diferente da Europa que usa 50 Hz."},
+    {p:"A tensão padrão monofásica residencial no Brasil é:", o:["110 V","127 V ou 220 V (depende da região e da concessionária)","380 V","440 V"], r:1, e:"O Brasil tem duas tensões monofásicas: 127 V (em redes 220 V trifásico) ou 220 V (em redes 380 V)."},
+    {p:"O que é aterramento funcional, diferente do aterramento de proteção?", o:["São iguais","Aterramento necessário para o correto funcionamento do equipamento, não para proteção de pessoas","Aterramento provisório","Aterramento de para-raios"], r:1, e:"Aterramento funcional garante desempenho do sistema; o de proteção protege pessoas de choques."},
+    {p:"O quadro de distribuição deve ser instalado em local:", o:["Qualquer lugar","Acessível, ventilado, protegido contra umidade e com espaço para manutenção","Escondido atrás de móveis","Próximo ao banheiro"], r:1, e:"O quadro deve ser acessível para operação e manutenção, com proteção adequada ao ambiente."},
+    {p:"O que é a NBR 10898?", o:["NBR de aterramento","Sistemas de iluminação de emergência em edificações","Cabos de BT","Instalações de média tensão"], r:1, e:"A NBR 10898 define requisitos para iluminação de emergência, garantindo visibilidade nas rotas de fuga."},
+    {p:"O que é bitola de fio elétrico?", o:["Comprimento do fio","Seção transversal do condutor em mm², que determina a capacidade de condução de corrente","Tipo de isolamento","Cor do fio"], r:1, e:"A bitola (seção) determina quanta corrente o fio suporta sem superaquecer — escolha errada causa incêndio."},
+    {p:"A NBR IEC 60900 trata de:", o:["Instalações de BT","Ferramentas manuais isoladas para trabalho em instalações elétricas energizadas","Extintores","Aterramento"], r:1, e:"Define requisitos e classificação de ferramentas dielétricas (até 1.000 V CA ou 1.500 V CC)."},
+    {p:"O que é ligação equipotencial conforme a NBR 5410?", o:["Ligar dois fios de fase","Conectar massas metálicas entre si e ao terra para eliminar diferenças de potencial perigosas","Ligar neutro ao terra","Instalar DPS"], r:1, e:"A equipotencialização elimina diferenças de potencial entre partes metálicas, evitando choques indiretos."},
+    {p:"Qual a diferença entre proteção contra contato direto e indireto (NBR 5410)?", o:["São iguais","Direto: toque em partes vivas. Indireto: toque em massas acidentalmente energizadas por falta de isolamento","Direto é para BT, indireto para AT","Indireto é mais grave"], r:1, e:"A NBR 5410 exige proteção para ambos: quem toca no fio vivo (direto) ou na carcaça com falha (indireto)."},
+    {p:"O que é o quadro de distribuição geral (QDG)?", o:["Qualquer quadro elétrico","Quadro principal que recebe energia do medidor e distribui para os circuitos e subquadros da edificação","Medidor de energia","Transformador"], r:1, e:"O QDG é o ponto central de distribuição — protege e distribui energia para toda a instalação elétrica."},
+    {p:"O DR (diferencial residual) substitui o aterramento?", o:["Sim, completamente","Não — DR detecta fuga de corrente e desliga o circuito, mas o aterramento dissipa a carga; ambos são necessários","Sim, em instalações novas","Somente em residências"], r:1, e:"DR e aterramento são complementares — o DR atua mais rápido, mas o aterramento provê dissipação segura da carga."},
+    {p:"O que é o fator de potência em instalações elétricas?", o:["Tensão dividida pela corrente","Relação entre potência ativa (útil) e potência aparente — indica a eficiência do circuito","Resistência do condutor","Frequência da rede"], r:1, e:"Fator de potência próximo de 1 indica instalação eficiente. Valor baixo gera perdas e pode resultar em multas da concessionária."}
 ];
 
 // ===== LÓGICA DO QUIZ =====
@@ -666,7 +783,7 @@ let qIdx = 0, qScore = 0, qList = [];
 
 function initQuiz() {
     qIdx = 0; qScore = 0;
-    qList = shuffle([...BANCO]).slice(0, 100);
+    qList = shuffle([...BANCO]).slice(0, 180);
     renderQ();
 }
 
